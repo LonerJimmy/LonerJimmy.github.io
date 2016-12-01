@@ -1,0 +1,886 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="源码,volley,函数,网络,线程," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。
+前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：
+1NetworkResponse networkResponse = mNetwork.performRequest(request);
+perfo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Volley源码解析(二)">
+<meta property="og:url" content="http://yoursite.com/2016/07/02/Volley源码解析(二)/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。
+前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：
+1NetworkResponse networkResponse = mNetwork.performRequest(request);
+perfo">
+<meta property="og:updated_time" content="2016-11-30T23:07:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Volley源码解析(二)">
+<meta name="twitter:description" content="上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。
+前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：
+1NetworkResponse networkResponse = mNetwork.performRequest(request);
+perfo">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/02/Volley源码解析(二)/"/>
+
+  <title> Volley源码解析(二) | Hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?cbe5601c4b3c8f08594a3d379e8c2cd0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Hexo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Volley源码解析(二)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-07-02T18:05:18+08:00" content="2016-07-02">
+              2016-07-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/02/Volley源码解析(二)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/02/Volley源码解析(二)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/02/Volley源码解析(二)/" class="leancloud_visitors" data-flag-title="Volley源码解析(二)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。</p>
+<p>前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NetworkResponse networkResponse = mNetwork.performRequest(request);</div></pre></td></tr></table></figure>
+<p>performRequest函数的实现，我们看一下BasicNetwork中performRequest函数（其中BasicNetwork.java是Network的实现类），代码很多，我截取了一部分核心的代码片段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</div><div class="line">addCacheHeaders(headers, request.getCacheEntry());</div><div class="line">//网络请求</div><div class="line">httpResponse = mHttpStack.performRequest(request, headers);</div><div class="line">StatusLine statusLine = httpResponse.getStatusLine();</div><div class="line">int statusCode = statusLine.getStatusCode();</div><div class="line"></div><div class="line">responseHeaders = convertHeaders(httpResponse.getAllHeaders());</div><div class="line">if (statusCode == HttpStatus.SC_NOT_MODIFIED) &#123;</div><div class="line">      Entry entry = request.getCacheEntry();</div><div class="line">      if (entry == null) &#123;</div><div class="line">             return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, null,</div><div class="line">                                responseHeaders, true,</div><div class="line">                                SystemClock.elapsedRealtime() - requestStart);</div><div class="line">       &#125;</div><div class="line">       entry.responseHeaders.putAll(responseHeaders);</div><div class="line">       return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, entry.data,</div><div class="line">                            entry.responseHeaders, true,</div><div class="line">                            SystemClock.elapsedRealtime() - requestStart);</div><div class="line">       &#125;</div><div class="line">       if (httpResponse.getEntity() != null) &#123;</div><div class="line">            responseContents = entityToBytes(httpResponse.getEntity());</div><div class="line">       &#125;else &#123;</div><div class="line">             responseContents = new byte[0];</div><div class="line">       &#125;</div><div class="line">       long requestLifetime = SystemClock.elapsedRealtime() - requestStart;</div><div class="line">       logSlowRequests(requestLifetime, request, responseContents, statusLine);</div><div class="line">       if (statusCode &lt; 200 || statusCode &gt; 299) &#123;</div><div class="line">            throw new IOException();</div><div class="line">       &#125;</div><div class="line">return new NetworkResponse(statusCode, responseContents, responseHeaders,   false,SystemClock.elapsedRealtime() - requestStart);</div></pre></td></tr></table></figure>
+<p>代码比较多，前一部分代码就是做网络请求，后面一部分是对网络请求返回的response进行处理（包括head和entity）。网络请求的代码就一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpResponse = mHttpStack.performRequest(request, headers);</div></pre></td></tr></table></figure>
+<p>mHttpStack就是一个接口，它有两个实现类，就是我们上一章介绍的RequestQueue，当API&gt;=9的时候，使用HurlStack，反之，使用HttpClientStack。这两个stack就是HttpStack的具体实现类。</p>
+<p><strong>1、我们先看一下HurlStack实现performRequest方法。</strong></p>
+<p>1.1 首先获取request中的url。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String url = request.getUrl();</div><div class="line">URL parsedUrl = new URL(url);</div></pre></td></tr></table></figure>
+<p>1.2 打开http连接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpURLConnection connection = openConnection(parsedUrl, request);</div></pre></td></tr></table></figure>
+<p>openConnection实现方法，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">HttpURLConnection connection = createConnection(url);</div><div class="line">int timeoutMs = request.getTimeoutMs();</div><div class="line">connection.setConnectTimeout(timeoutMs);</div><div class="line">connection.setReadTimeout(timeoutMs);</div><div class="line">connection.setUseCaches(false);</div><div class="line">connection.setDoInput(true);</div></pre></td></tr></table></figure>
+<p>如代码所示，openConnection方法使用系统的HttpURLConnection类，设置timeout，缓存等参数，然后return。</p>
+<p>1.3 打开网络连接了，我们继续看performRequest方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setConnectionParametersForRequest(connection, request);</div></pre></td></tr></table></figure>
+<p>如函数名字意思一样，就是为request设置一些parameters，我们看一下这个函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">                .......</div><div class="line">                </div><div class="line">case Method.GET:</div><div class="line">     connection.setRequestMethod(&quot;GET&quot;);</div><div class="line">     break;</div><div class="line">case Method.DELETE:</div><div class="line">     connection.setRequestMethod(&quot;DELETE&quot;);</div><div class="line">     break;</div><div class="line">case Method.POST:</div><div class="line">     connection.setRequestMethod(&quot;POST&quot;);</div><div class="line">     addBodyIfExists(connection, request);</div><div class="line">     break;</div><div class="line">     </div><div class="line">               ........</div></pre></td></tr></table></figure>
+<p>就是设置一些请求的方法。</p>
+<p>1.4 返回code，报错处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int responseCode = connection.getResponseCode();</div><div class="line">if (responseCode == -1) &#123;</div><div class="line">  throw new IOException(&quot;Could not retrieve response code from HttpUrlConnection.&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>1.5 最后返回response</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">return response;</div></pre></td></tr></table></figure>
+<p><strong>2、我们再看一下HttpClientStack的实现方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">HttpUriRequest httpRequest = createHttpRequest(request, additionalHeaders);</div><div class="line">addHeaders(httpRequest, additionalHeaders);</div><div class="line">addHeaders(httpRequest, request.getHeaders());</div><div class="line">onPrepareRequest(httpRequest);</div><div class="line">HttpParams httpParams = httpRequest.getParams();</div><div class="line">int timeoutMs = request.getTimeoutMs();</div><div class="line">HttpConnectionParams.setConnectionTimeout(httpParams, 5000);</div><div class="line">HttpConnectionParams.setSoTimeout(httpParams, timeoutMs);</div><div class="line">return mClient.execute(httpRequest);</div></pre></td></tr></table></figure>
+<p>这里创建的网络请求是使用HttpClient中HttpUriRequest包来做网络请求，下面类似于HurlStack，用来添加参数。</p>
+<p>好啦，介绍好了两个实现类（HttpClientStack和HurlStack）中performRequest的实现方法，我们在继续BasicNetwork的performRequest方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">responseHeaders = convertHeaders(httpResponse.getAllHeaders());</div><div class="line">if (statusCode == HttpStatus.SC_NOT_MODIFIED) &#123;</div><div class="line">Entry entry = request.getCacheEntry();</div><div class="line">if (entry == null) &#123;</div><div class="line">   return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, null,</div><div class="line">                                responseHeaders, true,</div><div class="line">                                SystemClock.elapsedRealtime() - requestStart);</div><div class="line">&#125;</div><div class="line">                   </div><div class="line">entry.responseHeaders.putAll(responseHeaders);</div><div class="line">return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, entry.data,</div><div class="line">                            entry.responseHeaders, true,</div><div class="line">                            SystemClock.elapsedRealtime() - requestStart);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>把request的head和Entry进行包装。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">if (httpResponse.getEntity() != null) &#123;</div><div class="line">    responseContents = entityToBytes(httpResponse.getEntity());</div><div class="line">&#125; else &#123;</div><div class="line">    responseContents = new byte[0];</div><div class="line">&#125;</div><div class="line">                </div><div class="line">long requestLifetime = SystemClock.elapsedRealtime() - requestStart;</div><div class="line">logSlowRequests(requestLifetime, request, responseContents, statusLine);</div><div class="line">return new NetworkResponse(statusCode, responseContents, responseHeaders,   false,SystemClock.elapsedRealtime() - requestStart);</div></pre></td></tr></table></figure>
+<p>最后return新的response。</p>
+<p>现在网络请求已经完成，下面就应该开一个线程，把这个网络请求跑起来啦。我们再回到networkDispatcher.java中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mDelivery.postResponse(request, response);</div></pre></td></tr></table></figure>
+<p>我们看一下ResponseDelivery实现类ExecutorDelivery中的postResponse方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">request.markDelivered();</div><div class="line">request.addMarker(&quot;post-response&quot;);</div><div class="line">mResponsePoster.execute(new ResponseDeliveryRunnable(request, response, runnable));</div></pre></td></tr></table></figure>
+<p>这个方法，把request网络请求放到ResponseDeliveryRunnable中。</p>
+<p>这大概就是我理解的volley网络请求的详细流程，如果有哪里不对的地方，希望大神们指点一二。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码/" rel="tag">#源码</a>
+          
+            <a href="/tags/volley/" rel="tag">#volley</a>
+          
+            <a href="/tags/函数/" rel="tag">#函数</a>
+          
+            <a href="/tags/网络/" rel="tag">#网络</a>
+          
+            <a href="/tags/线程/" rel="tag">#线程</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/27/Volley源码解析(一)/" rel="next" title="Volley源码解析(一)">
+                <i class="fa fa-chevron-left"></i> Volley源码解析(一)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/04/Volley源码解析(三)/" rel="prev" title="Volley源码解析（三）——图片加载">
+                Volley源码解析（三）——图片加载 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/02/Volley源码解析(二)/"
+           data-title="Volley源码解析(二)" data-url="http://yoursite.com/2016/07/02/Volley源码解析(二)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LonerJimmy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zjm0518" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xujinyang.github.io/" title="进击的小羊" target="_blank">进击的小羊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://richardcao.me/" title="Richard-Cao" target="_blank">Richard-Cao</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zjm0518"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("oCSVlTrvi2U61dOlhtIkagek-gzGzoHsz", "vu96UOe4K8Woi2VRr10y5QC9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

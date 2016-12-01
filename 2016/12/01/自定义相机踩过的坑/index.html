@@ -1,0 +1,854 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,camera,native," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
+setPreviewSize和setPic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义相机踩过的坑">
+<meta property="og:url" content="http://yoursite.com/2016/12/01/自定义相机踩过的坑/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
+setPreviewSize和setPic">
+<meta property="og:image" content="http://img.blog.csdn.net/20161201202958454">
+<meta property="og:image" content="http://img.blog.csdn.net/20161201203612362">
+<meta property="og:updated_time" content="2016-11-30T23:07:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义相机踩过的坑">
+<meta name="twitter:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
+setPreviewSize和setPic">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161201202958454">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/01/自定义相机踩过的坑/"/>
+
+  <title> 自定义相机踩过的坑 | Hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?cbe5601c4b3c8f08594a3d379e8c2cd0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Hexo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自定义相机踩过的坑
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-12-01T16:36:18+08:00" content="2016-12-01">
+              2016-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/01/自定义相机踩过的坑/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/01/自定义相机踩过的坑/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/01/自定义相机踩过的坑/" class="leancloud_visitors" data-flag-title="自定义相机踩过的坑">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="通用的问题"><a href="#通用的问题" class="headerlink" title="通用的问题"></a>通用的问题</h2><p>因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。</p>
+<p><strong>setPreviewSize和setPictureSize</strong><br>之前做法，paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes，获取一个list<size>，从里面找出最大的width<em>height，然后设置setPreviewSize和setPictureSize，这种情况，对于surfaceview是全屏的情况下，是没发现什么问题的。但是如果surfaceview不是全屏的情况下呢？<br>这种情况，找到一种最合适的解决方案，算出surfaceview的width/height，然后遍历整个paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes的width/height，找出最接近的比例，这就是最核心的算法。<br>好了，算法找出来之后，我们就要开始进一步优化了。<br><strong>遇到过的坑：</strong><br>1）好了，算法写好了，我们就开始测试了，发现相机预览的时候，图像还是有拉伸，这是为什么咧？<br>为了解决这个问题，我把所有的支持的preview的图片全都打印出来，发现其中有很多size，width &gt; height，而我们的surfaceview是width &lt; height，这是一个坑，所以我们在进行核心算法之前，我们要遍历list，目的是要先将获取的previewsize的list中的size中的width和height全部变成width &gt; height，然后返回一个我们需要在后面算法遍历的list。同理，picturesize也是要同样处理。<br>2）使用上面新的算法的时候，发现预览的时候，发现特别模糊。<br>这个原因，一下就可以猜测到，我们选取preview size的时候，虽然找到最接近sufaceview的width/height，但是这个像素点太低了。所以我又将support preview size以及width/height又给打了一遍，发现其实有两个size是比例相近的，其中一个size像素比较高，但是为啥选了低的那个咧？<br>很明显，这个support list是乱序的，选到一个最合适的，就是它了。所以，开始还需要将这个list排序一波，从大到小，这样的话，就算list中有好几个比例最接近sufaceview的，我们也是找到最大像素的size。同时呢，为了防止图片像素太低，我又加了一个判断，少于480 </em> 320（实验得到的），就可以直接break出来了，这样也能保证比较高的像素点，还能减少时间复杂度。<br>3）遗留问题，三星<br>三星拍出来的照片是反的，开始以为是width&gt;heigth的原因，验证得到，setRoutation失败。<br>开始以为是preview和picture的width&gt;height，然后就在想改变surfaceview或者其他方法，后来发现，其他手机width&gt;height，最终才知道，原来是三星手机setRoutation没作用。<br>至今没有解决。</size></p>
+<h2 id="个别手机问题"><a href="#个别手机问题" class="headerlink" title="个别手机问题"></a>个别手机问题</h2><p><strong>设置自动对焦</strong></p>
+<p>好了，设置好preview和picture的size之后，图像就不会出现变形或者其他状况了，但是我们发现这样的话，看起来模糊，这是为啥咧？原来我们没有设置自动对焦，好，那我们就设置自动对焦，这样又趴出阿里一些坑，而且都是个别手机的问题。<br>我们都知道设置自动对焦代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div></pre></td></tr></table></figure>
+<p>好了，然后我们就用手机测试一波。</p>
+<p><strong>三星手机</strong></p>
+<p>出现了这个问题：<br><img src="http://img.blog.csdn.net/20161201202958454" alt="这里写图片描述"></p>
+<p>三星手机，在执行，autofus方法的时候崩溃了（这里涉及到native中的代码，太难了，所以没有去看源码）。当时猜测可能是相机还没完全初始化好，就开始自动对焦，就会崩溃，所以这个方法延时两秒执行，然后就可以了。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">handler.postDelayed(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                try &#123;</div><div class="line">                    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">                &#125; catch (RuntimeException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;, 2000);</div></pre></td></tr></table></figure>
+<p><strong>猜测原因：</strong><br>部分手机camera初始化耗时长，还没初始好，就设置自动对焦可能就出现问题了。自动对焦延时对焦，对相机来说没有什么影响，所以这种方法可以适用于其他手机类型。</p>
+<p><strong>小米手机</strong><br>红米米手机设置parameters.setFocusMode自动对焦，会直接蹦掉。log如下：<br><img src="http://img.blog.csdn.net/20161201203612362" alt="这里写图片描述"></p>
+<p>这个log根本看不出问题出在哪里，不过幸好的时候，我直接没有设置过自动对焦，而且小米手机没有发生过崩溃，所以就大胆猜测这个问题出在设置自动对焦的时候，最终定位到setFocusMode方法中。<br>做了如下处理：（红米手机所支持的FoucusMode的类型中，没有auto类型，所以setParameters的时候会出错）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; focusModes = parameters.getSupportedFocusModes();</div><div class="line">for (String mode : focusModes) &#123;</div><div class="line">            if (mode.equals(Camera.Parameters.FOCUS_MODE_AUTO)) &#123;</div><div class="line">                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/camera/" rel="tag">#camera</a>
+          
+            <a href="/tags/native/" rel="tag">#native</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/26/微信小程序学习资料汇总/" rel="next" title="微信小程序学习资料汇总">
+                <i class="fa fa-chevron-left"></i> 微信小程序学习资料汇总
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/01/基于ReactNative和Realm的开源项目/" rel="prev" title="自定义相机遇到的坑总结">
+                自定义相机遇到的坑总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/01/自定义相机踩过的坑/"
+           data-title="自定义相机踩过的坑" data-url="http://yoursite.com/2016/12/01/自定义相机踩过的坑/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LonerJimmy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zjm0518" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xujinyang.github.io/" title="进击的小羊" target="_blank">进击的小羊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://richardcao.me/" title="Richard-Cao" target="_blank">Richard-Cao</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用的问题"><span class="nav-number">1.</span> <span class="nav-text">通用的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个别手机问题"><span class="nav-number">2.</span> <span class="nav-text">个别手机问题</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zjm0518"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("oCSVlTrvi2U61dOlhtIkagek-gzGzoHsz", "vu96UOe4K8Woi2VRr10y5QC9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
