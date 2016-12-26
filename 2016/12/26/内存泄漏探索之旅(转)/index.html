@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android,camera,native," />
+  <meta name="keywords" content="android,内存泄漏," />
 
 
 
@@ -84,22 +84,22 @@
 
 
 
-<meta name="description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
+<meta name="description" content="内存泄漏定义：当一个对象已经不需要再使用了，本该被回收时，而有另外一个正在使用的对象持有它的引用从而导致它不能被回收，这导致本该被回收的对象不能被回收而停留在堆内存中，这就产生了内存泄漏。
+最近在公司里面做某个模块的时候，使用很多静态类、方法，也有很多单例在里面，大家都知道使用静态方法、类、变量的时候，很容易造成内存泄漏问题。所以我就特意查了一下内存泄漏相关的知识，去更深层、更全面的去探讨一下这个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自定义相机踩过的坑">
-<meta property="og:url" content="http://loner.pub/2016/12/01/自定义相机踩过的坑/index.html">
+<meta property="og:title" content="内存泄漏探索之旅（转）">
+<meta property="og:url" content="http://loner.pub/2016/12/26/内存泄漏探索之旅(转)/index.html">
 <meta property="og:site_name" content="小屎撅">
-<meta property="og:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201202958454">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201203612362">
-<meta property="og:updated_time" content="2016-12-15T04:10:45.000Z">
+<meta property="og:description" content="内存泄漏定义：当一个对象已经不需要再使用了，本该被回收时，而有另外一个正在使用的对象持有它的引用从而导致它不能被回收，这导致本该被回收的对象不能被回收而停留在堆内存中，这就产生了内存泄漏。
+最近在公司里面做某个模块的时候，使用很多静态类、方法，也有很多单例在里面，大家都知道使用静态方法、类、变量的时候，很容易造成内存泄漏问题。所以我就特意查了一下内存泄漏相关的知识，去更深层、更全面的去探讨一下这个">
+<meta property="og:image" content="http://img.blog.csdn.net/20161226225358453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20161226225442672?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2016-12-26T14:58:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自定义相机踩过的坑">
-<meta name="twitter:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20161201202958454">
+<meta name="twitter:title" content="内存泄漏探索之旅（转）">
+<meta name="twitter:description" content="内存泄漏定义：当一个对象已经不需要再使用了，本该被回收时，而有另外一个正在使用的对象持有它的引用从而导致它不能被回收，这导致本该被回收的对象不能被回收而停留在堆内存中，这就产生了内存泄漏。
+最近在公司里面做某个模块的时候，使用很多静态类、方法，也有很多单例在里面，大家都知道使用静态方法、类、变量的时候，很容易造成内存泄漏问题。所以我就特意查了一下内存泄漏相关的知识，去更深层、更全面的去探讨一下这个">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161226225358453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -120,9 +120,9 @@ setPreviewSize和setPic">
 
 
 
-  <link rel="canonical" href="http://loner.pub/2016/12/01/自定义相机踩过的坑/"/>
+  <link rel="canonical" href="http://loner.pub/2016/12/26/内存泄漏探索之旅(转)/"/>
 
-  <title> 自定义相机踩过的坑 | 小屎撅 </title>
+  <title> 内存泄漏探索之旅（转） | 小屎撅 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +272,7 @@ setPreviewSize和setPic">
             
             
               
-                自定义相机踩过的坑
+                内存泄漏探索之旅（转）
               
             
           </h1>
@@ -284,8 +284,8 @@ setPreviewSize和setPic">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-01T16:36:18+08:00" content="2016-12-01">
-              2016-12-01
+            <time itemprop="dateCreated" datetime="2016-12-26T20:50:18+08:00" content="2016-12-26">
+              2016-12-26
             </time>
           </span>
 
@@ -314,8 +314,8 @@ setPreviewSize和setPic">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/12/01/自定义相机踩过的坑/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/01/自定义相机踩过的坑/" itemprop="commentsCount"></span>
+                <a href="/2016/12/26/内存泄漏探索之旅(转)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/26/内存泄漏探索之旅(转)/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -325,7 +325,7 @@ setPreviewSize和setPic">
 
           
           
-             <span id="/2016/12/01/自定义相机踩过的坑/" class="leancloud_visitors" data-flag-title="自定义相机踩过的坑">
+             <span id="/2016/12/26/内存泄漏探索之旅(转)/" class="leancloud_visitors" data-flag-title="内存泄漏探索之旅（转）">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -347,22 +347,30 @@ setPreviewSize和setPic">
       
 
       
-        <h2 id="通用的问题"><a href="#通用的问题" class="headerlink" title="通用的问题"></a>通用的问题</h2><p>因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。</p>
-<p><strong>setPreviewSize和setPictureSize</strong><br>之前做法，paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes，获取一个list<size>，从里面找出最大的width<em>height，然后设置setPreviewSize和setPictureSize，这种情况，对于surfaceview是全屏的情况下，是没发现什么问题的。但是如果surfaceview不是全屏的情况下呢？<br>这种情况，找到一种最合适的解决方案，算出surfaceview的width/height，然后遍历整个paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes的width/height，找出最接近的比例，这就是最核心的算法。<br>好了，算法找出来之后，我们就要开始进一步优化了。<br><strong>遇到过的坑：</strong><br>1）好了，算法写好了，我们就开始测试了，发现相机预览的时候，图像还是有拉伸，这是为什么咧？<br>为了解决这个问题，我把所有的支持的preview的图片全都打印出来，发现其中有很多size，width &gt; height，而我们的surfaceview是width &lt; height，这是一个坑，所以我们在进行核心算法之前，我们要遍历list，目的是要先将获取的previewsize的list中的size中的width和height全部变成width &gt; height，然后返回一个我们需要在后面算法遍历的list。同理，picturesize也是要同样处理。<br>2）使用上面新的算法的时候，发现预览的时候，发现特别模糊。<br>这个原因，一下就可以猜测到，我们选取preview size的时候，虽然找到最接近sufaceview的width/height，但是这个像素点太低了。所以我又将support preview size以及width/height又给打了一遍，发现其实有两个size是比例相近的，其中一个size像素比较高，但是为啥选了低的那个咧？<br>很明显，这个support list是乱序的，选到一个最合适的，就是它了。所以，开始还需要将这个list排序一波，从大到小，这样的话，就算list中有好几个比例最接近sufaceview的，我们也是找到最大像素的size。同时呢，为了防止图片像素太低，我又加了一个判断，少于480 </em> 320（实验得到的），就可以直接break出来了，这样也能保证比较高的像素点，还能减少时间复杂度。<br>3）遗留问题，三星<br>三星拍出来的照片是反的，开始以为是width&gt;heigth的原因，验证得到，setRoutation失败。<br>开始以为是preview和picture的width&gt;height，然后就在想改变surfaceview或者其他方法，后来发现，其他手机width&gt;height，最终才知道，原来是三星手机setRoutation没作用。<br>至今没有解决。</size></p>
-<h2 id="个别手机问题"><a href="#个别手机问题" class="headerlink" title="个别手机问题"></a>个别手机问题</h2><p><strong>设置自动对焦</strong></p>
-<p>好了，设置好preview和picture的size之后，图像就不会出现变形或者其他状况了，但是我们发现这样的话，看起来模糊，这是为啥咧？原来我们没有设置自动对焦，好，那我们就设置自动对焦，这样又趴出阿里一些坑，而且都是个别手机的问题。<br>我们都知道设置自动对焦代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div></pre></td></tr></table></figure>
-<p>好了，然后我们就用手机测试一波。</p>
-<p><strong>三星手机</strong></p>
-<p>出现了这个问题：<br><img src="http://img.blog.csdn.net/20161201202958454" alt="这里写图片描述"></p>
-<p>三星手机，在执行，autofus方法的时候崩溃了（这里涉及到native中的代码，太难了，所以没有去看源码）。当时猜测可能是相机还没完全初始化好，就开始自动对焦，就会崩溃，所以这个方法延时两秒执行，然后就可以了。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">handler.postDelayed(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                try &#123;</div><div class="line">                    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">                &#125; catch (RuntimeException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;, 2000);</div></pre></td></tr></table></figure>
-<p>这是我一开始的解决方法，后来又查找了一些资料，发现官方介绍文档的时候，说要将autoFocus放到startPreview之后，takePicture之前，结果自己试了一波，果然是这个原因。所以这样的话，我们就不要延时了，放到startPreview之后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mCamera.startPreview();</div><div class="line"></div><div class="line">try &#123;</div><div class="line">    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">        @Override</div><div class="line">        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125; catch (RuntimeException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>猜测原因：</strong><br>部分手机camera初始化耗时长，还没初始好，就设置自动对焦可能就出现问题了。自动对焦延时对焦，对相机来说没有什么影响，所以这种方法可以适用于其他手机类型。</p>
-<p><strong>小米手机</strong><br>红米米手机设置parameters.setFocusMode自动对焦，会直接蹦掉。log如下：<br><img src="http://img.blog.csdn.net/20161201203612362" alt="这里写图片描述"></p>
-<p>这个log根本看不出问题出在哪里，不过幸好的时候，我直接没有设置过自动对焦，而且小米手机没有发生过崩溃，所以就大胆猜测这个问题出在设置自动对焦的时候，最终定位到setFocusMode方法中。<br>做了如下处理：（红米手机所支持的FoucusMode的类型中，没有auto类型，所以setParameters的时候会出错）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; focusModes = parameters.getSupportedFocusModes();</div><div class="line">for (String mode : focusModes) &#123;</div><div class="line">            if (mode.equals(Camera.Parameters.FOCUS_MODE_AUTO)) &#123;</div><div class="line">                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+        <p><strong><em>内存泄漏定义：当一个对象已经不需要再使用了，本该被回收时，而有另外一个正在使用的对象持有它的引用从而导致它不能被回收，这导致本该被回收的对象不能被回收而停留在堆内存中，这就产生了内存泄漏。</em></strong></p>
+<p>最近在公司里面做某个模块的时候，使用很多静态类、方法，也有很多单例在里面，大家都知道使用静态方法、类、变量的时候，很容易造成内存泄漏问题。所以我就特意查了一下内存泄漏相关的知识，去更深层、更全面的去探讨一下这个问题。<br>下面是我在做相机的时候的单例工具类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">private static CameraManager mCameraManager;</div><div class="line">    private Activity mActivity;</div><div class="line">   </div><div class="line">    private CameraManager(Activity activity) &#123;</div><div class="line">        mActivity = activity;       </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static synchronized CameraManager getInstance(Activity activity) &#123;</div><div class="line">        if (mCameraManager == null) &#123;</div><div class="line">            mCameraManager = new CameraManager(activity);</div><div class="line">        &#125;</div><div class="line">        return mCameraManager;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>单例相比大家都知道，这种写法，相比大家也经常会用，把context传进来，这样在调用方法的时候就不用传context了，是不是很节省代码量，我以前写单例的时候，也特别喜欢这么写，但是实际上这么写真的好么？<br>答案是错，这样写，代码量节省了，但是你可能会出现更严重的问题，内存泄漏或者功能异常。假设，我们的activity被destroy掉了， 新的activity重新开始的时候，会重新getInstance，但是我们的instance不是null的，所以我们的CameraManager不会重建，而且还是之前的activity，就会出现下面的问题：<br>1、如果我们使用CameraManager访问activity的时候可能发生异常，因为现在的activity不是当前的activity。<br>2、内存泄漏，之前activity一直被静态变量持有，所以原来的activity根本无法释放。（所以静态变量很容易造成内存泄漏的）。<br>这样用实例来讲，是不是很容易理解内存泄漏的定义了。</p>
+<h2 id="一、讲了实例之后，我们在看一下，内存泄漏，我们研究的泄漏对象是什么？"><a href="#一、讲了实例之后，我们在看一下，内存泄漏，我们研究的泄漏对象是什么？" class="headerlink" title="一、讲了实例之后，我们在看一下，内存泄漏，我们研究的泄漏对象是什么？"></a>一、讲了实例之后，我们在看一下，内存泄漏，我们研究的泄漏对象是什么？</h2><p>内存空间主要是静态存储区、堆区和栈区。<br><strong>静态存储区</strong>：内存在程序编译的时候已经分配好了，这块内存在程序整个运行期间都存在，主要存放静态数据，全局的static数据和static常量。<br><strong>栈区</strong>：执行函数时，内部变量都可以在栈上创建，函数执行结束时这些存储单元会被自动释放。栈内存在存储器的指令集中，效率高，但是分配内存有限。<br><strong>堆区</strong>：动态分配内存。程序在运行的时候用malloc或new申请任意大小的内存，程序员可以在适当的时候用free或delete释放内存。</p>
+<p>堆和栈的区别：<br>函数内定义的基本类型的变量和对象的引用变量都在函数的栈内存中分配。当超过变量作用域后，java就会释放掉该变量分配的内存空间，这些内存空间就可以立即被其他使用。<br>堆内存用于存放所有由new创建的对象（内容包括该对象其中的所有成员变量）和数组。在堆中分配的内存，由java虚拟机自动垃圾回收器来管理。在堆中产生了一个数组或者对象后，还可以在栈中定义一个特殊的变量，这个变量的取值等于数组或者对象在堆内存中的首地址，在栈中的这个特殊的变量就变成了数组或者对象的引用变量，以后就可以在程序中使用栈内存中的引用变量来访问堆中的数组或者对象，引用变量相当于为数组或者对象起的一个别名，或者代号。</p>
+<p>堆是不连续的内存区域（因为系统是用链表来存储空闲内存地址，自然不是连续的），堆大小受限于计算机系统中有效的虚拟内存（32bit系统理论上是4G），所以堆的空间比较灵活，比较大。栈是一块连续的内存区域，大小是操作系统预定好的，windows下栈大小是2M（也有是1M，在编译时确定，VC中可设置）。</p>
+<p>对于堆，频繁的new/delete会造成大量内存碎片，使程序效率降低。对于栈，它是先进后出的队列，进出一一对应，不产生碎片，运行效率稳定高。</p>
+<p>最终结论：<br>局部变量的基本数据类型和引用存储于栈中，引用的对象实体存储于堆中。属于方法的变量，生命周期随方法结束。<br>成员变量全部存在堆中，因为他们属于类，最终是要被new出来使用。</p>
+<p>内存泄漏只针对于堆内存，他们存放的就是引用指向的对象实体。</p>
+<h2 id="二、内存为什么泄漏"><a href="#二、内存为什么泄漏" class="headerlink" title="二、内存为什么泄漏"></a>二、内存为什么泄漏</h2><p>内存释放是由垃圾回收机制来完成的，程序员不需要通过调用函数来释放内存，但是它只能回收无用并且不再被其他引用的对象所占的空间。</p>
+<p>java垃圾回收机制是从程序主要运行对象开始检查，遍历一遍得到无法回收的对象和他们所引用的对象链，组成无法回收对象集合，其他孤立的对象就会被垃圾回收。GC为了能够正确释放对象，必须监控每一个对象的运行状态，包括对象的申请、引用、被引用、赋值等，GC都需要进行监控。监视对象状态是为了更加准确地、及时地释放对象，<strong><em>而释放对象的根本原则就是该对象不再被引用</em></strong>。<br><img src="http://img.blog.csdn.net/20161226225358453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>在Android应用的开发中，为了防止内存溢出，在处理一些占用内存大而且声明周期较长的对象时候，可以尽量应用软引用和弱引用技术。</p>
+<p>软/弱引用可以和一个引用队列（ReferenceQueue）联合使用，如果软引用所引用的对象被垃圾回收器回收，Java虚拟机就会把这个软引用加入到与之关联的引用队列中。利用这个队列可以得知被回收的软/弱引用的对象列表，从而为缓冲器清除已失效的软/弱引用。</p>
+<p>假设我们的应用会用到大量的默认图片，比如应用中有默认的头像，默认游戏图标等等，这些图片很多地方会用到。如果每次都去读取图片，由于读取文件需要硬件操作，速度较慢，会导致性能较低。所以我们考虑将图片缓存起来，需要的时候直接从内存中读取。但是，由于图片占用内存空间比较大，缓存很多图片需要很多的内存，就可能比较容易发生OutOfMemory异常。这时，我们可以考虑使用软/弱引用技术来避免这个问题发生。以下就是高速缓冲器的雏形：</p>
+<p>首先定义一个HashMap，保存软引用对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private Map&lt;String, SoftReference&lt;Bitmap&gt;&gt; imageCache = new HashMap&lt;String, SoftReference&lt;Bitmap&gt;&gt;();</div></pre></td></tr></table></figure>
+<p>再来定义一个方法，保存Bitmap的软引用到HashMap。<br><img src="http://img.blog.csdn.net/20161226225442672?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>使用软引用以后，在OutOfMemory异常发生之前，这些缓存的图片资源的内存空间可以被释放掉的，从而避免内存达到上限，避免Crash发生。</p>
+<p>如果只是想避免OutOfMemory异常的发生，则可以使用软引用。如果对于应用的性能更在意，想尽快回收一些占用内存比较大的对象，则可以使用弱引用。</p>
+<p>另外可以根据对象是否经常使用来判断选择软引用还是弱引用。如果该对象可能会经常使用的，就尽量用软引用。如果该对象不被使用的可能性更大些，就可以用弱引用。</p>
+<p>回到我们的问题，为什么内存会泄露？</p>
+<p>堆内存中的长生命周期的对象持有短生命周期对象的强/软引用，尽管短生命周期对象已经不再需要，但是因为长生命周期对象持有它的引用而导致不能被回收，这就是Java中内存泄露的根本原因。</p>
+<p>如果想要看一下常见的android内存泄漏问题，可以看一下这个博客：<br><a href="http://blog.csdn.net/u010687392/article/details/49909477" target="_blank" rel="external">http://blog.csdn.net/u010687392/article/details/49909477</a></p>
 
       
     </div>
@@ -387,9 +395,7 @@ setPreviewSize和setPic">
           
             <a href="/tags/android/" rel="tag">#android</a>
           
-            <a href="/tags/camera/" rel="tag">#camera</a>
-          
-            <a href="/tags/native/" rel="tag">#native</a>
+            <a href="/tags/内存泄漏/" rel="tag">#内存泄漏</a>
           
         </div>
       
@@ -398,17 +404,13 @@ setPreviewSize和setPic">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/26/微信小程序学习资料汇总/" rel="next" title="微信小程序学习资料汇总">
-                <i class="fa fa-chevron-left"></i> 微信小程序学习资料汇总
+              <a href="/2016/12/02/基于ReactNative和Realm的开源项目/" rel="next" title="基于ReactNative和Realm的开源项目">
+                <i class="fa fa-chevron-left"></i> 基于ReactNative和Realm的开源项目
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/02/基于ReactNative和Realm的开源项目/" rel="prev" title="基于ReactNative和Realm的开源项目">
-                基于ReactNative和Realm的开源项目 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -457,8 +459,8 @@ setPreviewSize和setPic">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/01/自定义相机踩过的坑/"
-           data-title="自定义相机踩过的坑" data-url="http://loner.pub/2016/12/01/自定义相机踩过的坑/">
+      <div class="ds-thread" data-thread-key="2016/12/26/内存泄漏探索之旅(转)/"
+           data-title="内存泄漏探索之旅（转）" data-url="http://loner.pub/2016/12/26/内存泄漏探索之旅(转)/">
       </div>
     
   </div>
@@ -587,7 +589,7 @@ setPreviewSize和setPic">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用的问题"><span class="nav-number">1.</span> <span class="nav-text">通用的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个别手机问题"><span class="nav-number">2.</span> <span class="nav-text">个别手机问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、讲了实例之后，我们在看一下，内存泄漏，我们研究的泄漏对象是什么？"><span class="nav-number">1.</span> <span class="nav-text">一、讲了实例之后，我们在看一下，内存泄漏，我们研究的泄漏对象是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、内存为什么泄漏"><span class="nav-number">2.</span> <span class="nav-text">二、内存为什么泄漏</span></a></li></ol></div>
             
           </div>
         </section>
