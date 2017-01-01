@@ -96,7 +96,7 @@ FIELD: 用于描述">
 一、元注解元注解就是注解其他注解，就是我们要自定义注解的时候，需要有元注解来注解我们的自定义注解。1、@Target@Target 这个是用来指明注解修饰的目标，可能是package、类、接口、枚举、Annotation类型、类型成员（方法、构造方法、成员变量）、方法参数和本地变量。取值（ElementType）有：
 CONSTRUCTOR: 用于描述构造器 
 FIELD: 用于描述">
-<meta property="og:updated_time" content="2017-01-01T13:28:43.000Z">
+<meta property="og:updated_time" content="2017-01-01T13:31:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android自定义注解学习三步骤（转）">
 <meta name="twitter:description" content="java注解
@@ -360,15 +360,12 @@ PACKAGE: 用于描述包
 PARAMETER: 用于描述参数 
 TYPE: 用于描述类、接口(包括注解类型) 或enum声明
 </code></pre><p>举了例子就很好理解了，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Target(ElementType.TYPE)</div><div class="line">public @interface AnnotationTest1 &#123;</div><div class="line">    public String tableName() default &quot;className&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这就是我们自定义的一个注解，这个注解只能用来注解类、接口或者enum。</p>
-<p><strong>2、@Retention</strong><br>@Retention 定义了该Annotation的生命周期。<br>取值有：</p>
+<p>这就是我们自定义的一个注解，这个注解只能用来注解类、接口或者enum。<br><strong>2、@Retention</strong><br>@Retention 定义了该Annotation的生命周期。<br>取值有：</p>
 <pre><code>SOURCE：在源文件中有效（源文件保留）
 CLASS：在class文件中有效（class中保留）
 RUNTIME：在运行时有效（运行过程中保留）
 </code></pre><p>举个例子（在上面的例子中加一个元注解）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Target(ElementType.TYPE)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">public @interface AnnotationTest1 &#123;</div><div class="line">    public String tableName() default &quot;className&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>加上这个注解咧，就表示AnnotationTest1一直保留在程序运行过程中。</p>
-<p><strong>3、@Documented</strong><br>这个作用是在生成javadoc文档的时候将Annotation写入到文档中。因为android中用到的地方太少，这里就不多做介绍了。</p>
-<p><strong>4、@Inherited</strong><br>我们把我们自定义好的注解放到父类上，但是它不会被子类继承，我们可以在自定义的注解上定义上一个@Inherited。</p>
+<p>加上这个注解咧，就表示AnnotationTest1一直保留在程序运行过程中。<br><strong>3、@Documented</strong><br>这个作用是在生成javadoc文档的时候将Annotation写入到文档中。因为android中用到的地方太少，这里就不多做介绍了。<br><strong>4、@Inherited</strong><br>我们把我们自定义好的注解放到父类上，但是它不会被子类继承，我们可以在自定义的注解上定义上一个@Inherited。</p>
 <pre><code>如果父类的注解是定义在类上面，那么子类是可以继承过来的。 
 如果父类的注解定义在方法上面，那么子类也是可以继承过来。 
 如果子类重写了父类中定义了注解的方法，那么子类将无法继承该方法的注解，即子类在重写父类中被@Inherited标注的方法时，会将该方法连带它上面的注解一并覆盖掉。
