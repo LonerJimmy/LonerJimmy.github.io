@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="源码,volley,函数,网络,线程," />
+  <meta name="keywords" content="android,weex,JavaScript," />
 
 
 
@@ -84,25 +84,39 @@
 
 
 
-<meta name="description" content="上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。
-前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：
-1NetworkResponse networkResponse = mNetwork.performRequest(request);
-perfo">
+<meta name="description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
+使用方法1、项目地址
+2、配置环境
+这个大家可以从weex官网去看。weex官网
+3、运行项目terminal进入到项目更目录，执行命令：
+1npm install
+执行脚本，把we文件编译成">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Volley源码解析(二)">
-<meta property="og:url" content="http://loner.pub/2016/07/02/Volley源码解析(二)/index.html">
+<meta property="og:title" content="Weex初学之旅">
+<meta property="og:url" content="http://loner.pub/2017/01/07/初学weex/index.html">
 <meta property="og:site_name" content="小屎撅">
-<meta property="og:description" content="上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。
-前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：
-1NetworkResponse networkResponse = mNetwork.performRequest(request);
-perfo">
-<meta property="og:updated_time" content="2016-11-30T23:07:34.000Z">
+<meta property="og:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
+使用方法1、项目地址
+2、配置环境
+这个大家可以从weex官网去看。weex官网
+3、运行项目terminal进入到项目更目录，执行命令：
+1npm install
+执行脚本，把we文件编译成">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-02-07T09:23:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Volley源码解析(二)">
-<meta name="twitter:description" content="上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。
-前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：
-1NetworkResponse networkResponse = mNetwork.performRequest(request);
-perfo">
+<meta name="twitter:title" content="Weex初学之旅">
+<meta name="twitter:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
+使用方法1、项目地址
+2、配置环境
+这个大家可以从weex官网去看。weex官网
+3、运行项目terminal进入到项目更目录，执行命令：
+1npm install
+执行脚本，把we文件编译成">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -123,9 +137,9 @@ perfo">
 
 
 
-  <link rel="canonical" href="http://loner.pub/2016/07/02/Volley源码解析(二)/"/>
+  <link rel="canonical" href="http://loner.pub/2017/01/07/初学weex/"/>
 
-  <title> Volley源码解析(二) | 小屎撅 </title>
+  <title> Weex初学之旅 | 小屎撅 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -275,7 +289,7 @@ perfo">
             
             
               
-                Volley源码解析(二)
+                Weex初学之旅
               
             
           </h1>
@@ -287,8 +301,8 @@ perfo">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-02T18:05:18+08:00" content="2016-07-02">
-              2016-07-02
+            <time itemprop="dateCreated" datetime="2017-01-07T19:30:18+08:00" content="2017-01-07">
+              2017-01-07
             </time>
           </span>
 
@@ -317,8 +331,8 @@ perfo">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/07/02/Volley源码解析(二)/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/02/Volley源码解析(二)/" itemprop="commentsCount"></span>
+                <a href="/2017/01/07/初学weex/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/07/初学weex/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -328,7 +342,7 @@ perfo">
 
           
           
-             <span id="/2016/07/02/Volley源码解析(二)/" class="leancloud_visitors" data-flag-title="Volley源码解析(二)">
+             <span id="/2017/01/07/初学weex/" class="leancloud_visitors" data-flag-title="Weex初学之旅">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -350,45 +364,41 @@ perfo">
       
 
       
-        <p>上面一个章节，从volley的主要使用流程来大概分析了一下代码，这一章将详细的网络请求流程从源码角度分析一波。</p>
-<p>前面一章讲了NetworkDispatcher.java，这个线程主要任务就是网络请求和处理，其中run()函数中执行网络请求的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NetworkResponse networkResponse = mNetwork.performRequest(request);</div></pre></td></tr></table></figure>
-<p>performRequest函数的实现，我们看一下BasicNetwork中performRequest函数（其中BasicNetwork.java是Network的实现类），代码很多，我截取了一部分核心的代码片段：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</div><div class="line">addCacheHeaders(headers, request.getCacheEntry());</div><div class="line">//网络请求</div><div class="line">httpResponse = mHttpStack.performRequest(request, headers);</div><div class="line">StatusLine statusLine = httpResponse.getStatusLine();</div><div class="line">int statusCode = statusLine.getStatusCode();</div><div class="line"></div><div class="line">responseHeaders = convertHeaders(httpResponse.getAllHeaders());</div><div class="line">if (statusCode == HttpStatus.SC_NOT_MODIFIED) &#123;</div><div class="line">      Entry entry = request.getCacheEntry();</div><div class="line">      if (entry == null) &#123;</div><div class="line">             return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, null,</div><div class="line">                                responseHeaders, true,</div><div class="line">                                SystemClock.elapsedRealtime() - requestStart);</div><div class="line">       &#125;</div><div class="line">       entry.responseHeaders.putAll(responseHeaders);</div><div class="line">       return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, entry.data,</div><div class="line">                            entry.responseHeaders, true,</div><div class="line">                            SystemClock.elapsedRealtime() - requestStart);</div><div class="line">       &#125;</div><div class="line">       if (httpResponse.getEntity() != null) &#123;</div><div class="line">            responseContents = entityToBytes(httpResponse.getEntity());</div><div class="line">       &#125;else &#123;</div><div class="line">             responseContents = new byte[0];</div><div class="line">       &#125;</div><div class="line">       long requestLifetime = SystemClock.elapsedRealtime() - requestStart;</div><div class="line">       logSlowRequests(requestLifetime, request, responseContents, statusLine);</div><div class="line">       if (statusCode &lt; 200 || statusCode &gt; 299) &#123;</div><div class="line">            throw new IOException();</div><div class="line">       &#125;</div><div class="line">return new NetworkResponse(statusCode, responseContents, responseHeaders,   false,SystemClock.elapsedRealtime() - requestStart);</div></pre></td></tr></table></figure>
-<p>代码比较多，前一部分代码就是做网络请求，后面一部分是对网络请求返回的response进行处理（包括head和entity）。网络请求的代码就一行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpResponse = mHttpStack.performRequest(request, headers);</div></pre></td></tr></table></figure>
-<p>mHttpStack就是一个接口，它有两个实现类，就是我们上一章介绍的RequestQueue，当API&gt;=9的时候，使用HurlStack，反之，使用HttpClientStack。这两个stack就是HttpStack的具体实现类。</p>
-<p><strong>1、我们先看一下HurlStack实现performRequest方法。</strong></p>
-<p>1.1 首先获取request中的url。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String url = request.getUrl();</div><div class="line">URL parsedUrl = new URL(url);</div></pre></td></tr></table></figure>
-<p>1.2 打开http连接。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpURLConnection connection = openConnection(parsedUrl, request);</div></pre></td></tr></table></figure>
-<p>openConnection实现方法，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">HttpURLConnection connection = createConnection(url);</div><div class="line">int timeoutMs = request.getTimeoutMs();</div><div class="line">connection.setConnectTimeout(timeoutMs);</div><div class="line">connection.setReadTimeout(timeoutMs);</div><div class="line">connection.setUseCaches(false);</div><div class="line">connection.setDoInput(true);</div></pre></td></tr></table></figure>
-<p>如代码所示，openConnection方法使用系统的HttpURLConnection类，设置timeout，缓存等参数，然后return。</p>
-<p>1.3 打开网络连接了，我们继续看performRequest方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setConnectionParametersForRequest(connection, request);</div></pre></td></tr></table></figure>
-<p>如函数名字意思一样，就是为request设置一些parameters，我们看一下这个函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">                .......</div><div class="line">                </div><div class="line">case Method.GET:</div><div class="line">     connection.setRequestMethod(&quot;GET&quot;);</div><div class="line">     break;</div><div class="line">case Method.DELETE:</div><div class="line">     connection.setRequestMethod(&quot;DELETE&quot;);</div><div class="line">     break;</div><div class="line">case Method.POST:</div><div class="line">     connection.setRequestMethod(&quot;POST&quot;);</div><div class="line">     addBodyIfExists(connection, request);</div><div class="line">     break;</div><div class="line">     </div><div class="line">               ........</div></pre></td></tr></table></figure>
-<p>就是设置一些请求的方法。</p>
-<p>1.4 返回code，报错处理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int responseCode = connection.getResponseCode();</div><div class="line">if (responseCode == -1) &#123;</div><div class="line">  throw new IOException(&quot;Could not retrieve response code from HttpUrlConnection.&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>1.5 最后返回response</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">return response;</div></pre></td></tr></table></figure>
-<p><strong>2、我们再看一下HttpClientStack的实现方法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">HttpUriRequest httpRequest = createHttpRequest(request, additionalHeaders);</div><div class="line">addHeaders(httpRequest, additionalHeaders);</div><div class="line">addHeaders(httpRequest, request.getHeaders());</div><div class="line">onPrepareRequest(httpRequest);</div><div class="line">HttpParams httpParams = httpRequest.getParams();</div><div class="line">int timeoutMs = request.getTimeoutMs();</div><div class="line">HttpConnectionParams.setConnectionTimeout(httpParams, 5000);</div><div class="line">HttpConnectionParams.setSoTimeout(httpParams, timeoutMs);</div><div class="line">return mClient.execute(httpRequest);</div></pre></td></tr></table></figure>
-<p>这里创建的网络请求是使用HttpClient中HttpUriRequest包来做网络请求，下面类似于HurlStack，用来添加参数。</p>
-<p>好啦，介绍好了两个实现类（HttpClientStack和HurlStack）中performRequest的实现方法，我们在继续BasicNetwork的performRequest方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">responseHeaders = convertHeaders(httpResponse.getAllHeaders());</div><div class="line">if (statusCode == HttpStatus.SC_NOT_MODIFIED) &#123;</div><div class="line">Entry entry = request.getCacheEntry();</div><div class="line">if (entry == null) &#123;</div><div class="line">   return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, null,</div><div class="line">                                responseHeaders, true,</div><div class="line">                                SystemClock.elapsedRealtime() - requestStart);</div><div class="line">&#125;</div><div class="line">                   </div><div class="line">entry.responseHeaders.putAll(responseHeaders);</div><div class="line">return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, entry.data,</div><div class="line">                            entry.responseHeaders, true,</div><div class="line">                            SystemClock.elapsedRealtime() - requestStart);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>把request的head和Entry进行包装。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">if (httpResponse.getEntity() != null) &#123;</div><div class="line">    responseContents = entityToBytes(httpResponse.getEntity());</div><div class="line">&#125; else &#123;</div><div class="line">    responseContents = new byte[0];</div><div class="line">&#125;</div><div class="line">                </div><div class="line">long requestLifetime = SystemClock.elapsedRealtime() - requestStart;</div><div class="line">logSlowRequests(requestLifetime, request, responseContents, statusLine);</div><div class="line">return new NetworkResponse(statusCode, responseContents, responseHeaders,   false,SystemClock.elapsedRealtime() - requestStart);</div></pre></td></tr></table></figure>
-<p>最后return新的response。</p>
-<p>现在网络请求已经完成，下面就应该开一个线程，把这个网络请求跑起来啦。我们再回到networkDispatcher.java中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mDelivery.postResponse(request, response);</div></pre></td></tr></table></figure>
-<p>我们看一下ResponseDelivery实现类ExecutorDelivery中的postResponse方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">request.markDelivered();</div><div class="line">request.addMarker(&quot;post-response&quot;);</div><div class="line">mResponsePoster.execute(new ResponseDeliveryRunnable(request, response, runnable));</div></pre></td></tr></table></figure>
-<p>这个方法，把request网络请求放到ResponseDeliveryRunnable中。</p>
-<p>这大概就是我理解的volley网络请求的详细流程，如果有哪里不对的地方，希望大神们指点一二。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p><strong>1、</strong><a href="https://github.com/LonerJimmy/WeexTwo" target="_blank" rel="external"><strong>项目地址</strong></a></p>
+<p><strong>2、配置环境</strong></p>
+<p>这个大家可以从weex官网去看。<a href="https://weex-project.io/cn/guide/index.html" target="_blank" rel="external">weex官网</a></p>
+<p><strong>3、运行项目</strong><br>terminal进入到项目更目录，执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure>
+<p>执行脚本，把we文件编译成js文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./weextwo</div></pre></td></tr></table></figure>
+<p>继续执行脚本，将上一步生成的js文件复制到android的项目中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./weextwo android</div></pre></td></tr></table></figure>
+<p>用AndroidStudio或者eclipse打开playground项目，好啦，这样你就可以看到效果啦！</p>
+<h2 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h2><p>下面这些问题就是我在做weextwo的时候遇到的问题。</p>
+<p><strong>1、运行调试</strong></p>
+<p>我这里使用的方法其实就是讲生成的js文件放到android中运行的，当然weex是支持类似RN那样，pc作为服务器将生成的bundle分发到真机上，只要修改代码，真机就可以立即看到结果。<br>不过weex文档有点乱，所以相关东西还没开始写，大家可以去探究探究。</p>
+<p><strong>2、网络请求</strong></p>
+<p>网络请求返回的数据格式问题，这个主要是要会weex debug，对js加断点，调试，还要主要method和created、ready是两个范围的函数（切忌不要把created方法写到method中），method是你自己要定义的方法，created和ready是weex自带的声明周期方法。<br>因为weex还没有很好的开发工具，所以我暂时用的webstorm，但是webstorm无法自动化we的格式，所以我当时在写第一个界面的时候就卡住了，一直没有进行我created中的方法，后面才发现，原来自己把created写到method中去了，大家一定要注意了。</p>
+<p><strong>3、list的坑</strong></p>
+<p>list的每个item点击传入一个id的时候，通过var itemid = e.target.attr.newsid来获取组件中newsid参数值，这种方式遇到一个非常非常奇葩的坑。就是如果这个组件是你自己定义的话，没法获取到，必须是要原生的组件才能获取的到，具体原因还未查明。</p>
+<p><strong>4、文档错误</strong></p>
+<p>1）webview和imageview的时候，src前面还有一个:，怪不得我开始一直检查不到问题，还有目前webview好像还不支持显示html的功能。</p>
+<p>2）textarea和input中需要监控change和input的时候，input的写法是<br>oninput=“onTextAreaChange”，并不是文档中那种写法，试过，不行。</p>
+<p><strong>5、this的作用范围</strong></p>
+<p>this的范围不包括回调函数，所以如果要在回调函数中改变data中的数据，我们需要在函数中声明一个局部变量，使self=this，这个self的作用范围就在回调函数中。</p>
+<p><strong>6、storage问题</strong><br>因为你存储或者获取的时候都是在回调函数中获取的，这是一个异步的过程，所以你不能在执行完一个函数之后，直接在下面的过程中，使用回调得到的结果，这个时候回调的结果可能还没拿到，所以下面的过程都要放到回调函数中去。这个地方坑了我老半天。</p>
+<h2 id="需要解决的问题"><a href="#需要解决的问题" class="headerlink" title="需要解决的问题"></a>需要解决的问题</h2><ul>
+<li>日记保存后并没有立马生效，需要点击退出之后重新进app才能生效，因为weex的生命周期没有像android onresume生命周期，所以我暂时还没修改。</li>
+<li>长按删除，也是没有立马生效，同上原因。</li>
+<li>界面没有适配（weex没有dp单位），不同分辨率 界面看起来也不同。</li>
+</ul>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>好了，最后我们看一下，我们app的运行效果吧！</p>
+<p><img src="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="新闻列表"></p>
+<p><img src="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="新闻详情"></p>
+<p><img src="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记列表"></p>
+<p><img src="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记详情"></p>
+<p>还有上拉和下拉刷新，我没有截图下来，大家可以去试试。</p>
 
       
     </div>
@@ -411,15 +421,11 @@ perfo">
       
         <div class="post-tags">
           
-            <a href="/tags/源码/" rel="tag">#源码</a>
+            <a href="/tags/android/" rel="tag">#android</a>
           
-            <a href="/tags/volley/" rel="tag">#volley</a>
+            <a href="/tags/weex/" rel="tag">#weex</a>
           
-            <a href="/tags/函数/" rel="tag">#函数</a>
-          
-            <a href="/tags/网络/" rel="tag">#网络</a>
-          
-            <a href="/tags/线程/" rel="tag">#线程</a>
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
           
         </div>
       
@@ -428,17 +434,13 @@ perfo">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/27/Volley源码解析(一)/" rel="next" title="Volley源码解析(一)">
-                <i class="fa fa-chevron-left"></i> Volley源码解析(一)
+              <a href="/2017/01/01/Android自定义注解学习三步骤/" rel="next" title="Android自定义注解学习三步骤（转）">
+                <i class="fa fa-chevron-left"></i> Android自定义注解学习三步骤（转）
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/04/Volley源码解析(三)/" rel="prev" title="Volley源码解析（三）——图片加载">
-                Volley源码解析（三）——图片加载 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -487,8 +489,8 @@ perfo">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/07/02/Volley源码解析(二)/"
-           data-title="Volley源码解析(二)" data-url="http://loner.pub/2016/07/02/Volley源码解析(二)/">
+      <div class="ds-thread" data-thread-key="2017/01/07/初学weex/"
+           data-title="Weex初学之旅" data-url="http://loner.pub/2017/01/07/初学weex/">
       </div>
     
   </div>
@@ -617,7 +619,7 @@ perfo">
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的坑"><span class="nav-number">3.</span> <span class="nav-text">遇到的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要解决的问题"><span class="nav-number">4.</span> <span class="nav-text">需要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果"><span class="nav-number">5.</span> <span class="nav-text">效果</span></a></li></ol></div>
             
           </div>
         </section>
