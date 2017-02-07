@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android,camera,native," />
+  <meta name="keywords" content="android,weex,JavaScript," />
 
 
 
@@ -84,22 +84,39 @@
 
 
 
-<meta name="description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
+<meta name="description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
+使用方法1、项目地址
+2、配置环境
+这个大家可以从weex官网去看。weex官网
+3、运行项目terminal进入到项目更目录，执行命令：
+1npm install
+执行脚本，把we文件编译成">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自定义相机踩过的坑">
-<meta property="og:url" content="http://loner.pub/2016/12/01/自定义相机踩过的坑/index.html">
+<meta property="og:title" content="Weex初学之旅">
+<meta property="og:url" content="http://loner.pub/2016/06/27/初学weex/index.html">
 <meta property="og:site_name" content="小屎撅">
-<meta property="og:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201202958454">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201203612362">
-<meta property="og:updated_time" content="2016-12-15T04:10:45.000Z">
+<meta property="og:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
+使用方法1、项目地址
+2、配置环境
+这个大家可以从weex官网去看。weex官网
+3、运行项目terminal进入到项目更目录，执行命令：
+1npm install
+执行脚本，把we文件编译成">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-02-07T06:35:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自定义相机踩过的坑">
-<meta name="twitter:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20161201202958454">
+<meta name="twitter:title" content="Weex初学之旅">
+<meta name="twitter:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
+使用方法1、项目地址
+2、配置环境
+这个大家可以从weex官网去看。weex官网
+3、运行项目terminal进入到项目更目录，执行命令：
+1npm install
+执行脚本，把we文件编译成">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -120,9 +137,9 @@ setPreviewSize和setPic">
 
 
 
-  <link rel="canonical" href="http://loner.pub/2016/12/01/自定义相机踩过的坑/"/>
+  <link rel="canonical" href="http://loner.pub/2016/06/27/初学weex/"/>
 
-  <title> 自定义相机踩过的坑 | 小屎撅 </title>
+  <title> Weex初学之旅 | 小屎撅 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +289,7 @@ setPreviewSize和setPic">
             
             
               
-                自定义相机踩过的坑
+                Weex初学之旅
               
             
           </h1>
@@ -284,8 +301,8 @@ setPreviewSize和setPic">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-01T16:36:18+08:00" content="2016-12-01">
-              2016-12-01
+            <time itemprop="dateCreated" datetime="2016-06-27T19:30:18+08:00" content="2016-06-27">
+              2016-06-27
             </time>
           </span>
 
@@ -314,8 +331,8 @@ setPreviewSize和setPic">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/12/01/自定义相机踩过的坑/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/01/自定义相机踩过的坑/" itemprop="commentsCount"></span>
+                <a href="/2016/06/27/初学weex/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/27/初学weex/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -325,7 +342,7 @@ setPreviewSize和setPic">
 
           
           
-             <span id="/2016/12/01/自定义相机踩过的坑/" class="leancloud_visitors" data-flag-title="自定义相机踩过的坑">
+             <span id="/2016/06/27/初学weex/" class="leancloud_visitors" data-flag-title="Weex初学之旅">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -347,22 +364,41 @@ setPreviewSize和setPic">
       
 
       
-        <h2 id="通用的问题"><a href="#通用的问题" class="headerlink" title="通用的问题"></a>通用的问题</h2><p>因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。</p>
-<p><strong>setPreviewSize和setPictureSize</strong><br>之前做法，paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes，获取一个list<size>，从里面找出最大的width<em>height，然后设置setPreviewSize和setPictureSize，这种情况，对于surfaceview是全屏的情况下，是没发现什么问题的。但是如果surfaceview不是全屏的情况下呢？<br>这种情况，找到一种最合适的解决方案，算出surfaceview的width/height，然后遍历整个paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes的width/height，找出最接近的比例，这就是最核心的算法。<br>好了，算法找出来之后，我们就要开始进一步优化了。<br><strong>遇到过的坑：</strong><br>1）好了，算法写好了，我们就开始测试了，发现相机预览的时候，图像还是有拉伸，这是为什么咧？<br>为了解决这个问题，我把所有的支持的preview的图片全都打印出来，发现其中有很多size，width &gt; height，而我们的surfaceview是width &lt; height，这是一个坑，所以我们在进行核心算法之前，我们要遍历list，目的是要先将获取的previewsize的list中的size中的width和height全部变成width &gt; height，然后返回一个我们需要在后面算法遍历的list。同理，picturesize也是要同样处理。<br>2）使用上面新的算法的时候，发现预览的时候，发现特别模糊。<br>这个原因，一下就可以猜测到，我们选取preview size的时候，虽然找到最接近sufaceview的width/height，但是这个像素点太低了。所以我又将support preview size以及width/height又给打了一遍，发现其实有两个size是比例相近的，其中一个size像素比较高，但是为啥选了低的那个咧？<br>很明显，这个support list是乱序的，选到一个最合适的，就是它了。所以，开始还需要将这个list排序一波，从大到小，这样的话，就算list中有好几个比例最接近sufaceview的，我们也是找到最大像素的size。同时呢，为了防止图片像素太低，我又加了一个判断，少于480 </em> 320（实验得到的），就可以直接break出来了，这样也能保证比较高的像素点，还能减少时间复杂度。<br>3）遗留问题，三星<br>三星拍出来的照片是反的，开始以为是width&gt;heigth的原因，验证得到，setRoutation失败。<br>开始以为是preview和picture的width&gt;height，然后就在想改变surfaceview或者其他方法，后来发现，其他手机width&gt;height，最终才知道，原来是三星手机setRoutation没作用。<br>至今没有解决。</size></p>
-<h2 id="个别手机问题"><a href="#个别手机问题" class="headerlink" title="个别手机问题"></a>个别手机问题</h2><p><strong>设置自动对焦</strong></p>
-<p>好了，设置好preview和picture的size之后，图像就不会出现变形或者其他状况了，但是我们发现这样的话，看起来模糊，这是为啥咧？原来我们没有设置自动对焦，好，那我们就设置自动对焦，这样又趴出阿里一些坑，而且都是个别手机的问题。<br>我们都知道设置自动对焦代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div></pre></td></tr></table></figure>
-<p>好了，然后我们就用手机测试一波。</p>
-<p><strong>三星手机</strong></p>
-<p>出现了这个问题：<br><img src="http://img.blog.csdn.net/20161201202958454" alt="这里写图片描述"></p>
-<p>三星手机，在执行，autofus方法的时候崩溃了（这里涉及到native中的代码，太难了，所以没有去看源码）。当时猜测可能是相机还没完全初始化好，就开始自动对焦，就会崩溃，所以这个方法延时两秒执行，然后就可以了。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">handler.postDelayed(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                try &#123;</div><div class="line">                    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">                &#125; catch (RuntimeException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;, 2000);</div></pre></td></tr></table></figure>
-<p>这是我一开始的解决方法，后来又查找了一些资料，发现官方介绍文档的时候，说要将autoFocus放到startPreview之后，takePicture之前，结果自己试了一波，果然是这个原因。所以这样的话，我们就不要延时了，放到startPreview之后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mCamera.startPreview();</div><div class="line"></div><div class="line">try &#123;</div><div class="line">    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">        @Override</div><div class="line">        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125; catch (RuntimeException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>猜测原因：</strong><br>部分手机camera初始化耗时长，还没初始好，就设置自动对焦可能就出现问题了。自动对焦延时对焦，对相机来说没有什么影响，所以这种方法可以适用于其他手机类型。</p>
-<p><strong>小米手机</strong><br>红米米手机设置parameters.setFocusMode自动对焦，会直接蹦掉。log如下：<br><img src="http://img.blog.csdn.net/20161201203612362" alt="这里写图片描述"></p>
-<p>这个log根本看不出问题出在哪里，不过幸好的时候，我直接没有设置过自动对焦，而且小米手机没有发生过崩溃，所以就大胆猜测这个问题出在设置自动对焦的时候，最终定位到setFocusMode方法中。<br>做了如下处理：（红米手机所支持的FoucusMode的类型中，没有auto类型，所以setParameters的时候会出错）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; focusModes = parameters.getSupportedFocusModes();</div><div class="line">for (String mode : focusModes) &#123;</div><div class="line">            if (mode.equals(Camera.Parameters.FOCUS_MODE_AUTO)) &#123;</div><div class="line">                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p><strong>1、</strong><a href="https://github.com/LonerJimmy/WeexTwo" target="_blank" rel="external"><strong>项目地址</strong></a></p>
+<p><strong>2、配置环境</strong></p>
+<p>这个大家可以从weex官网去看。<a href="https://weex-project.io/cn/guide/index.html" target="_blank" rel="external">weex官网</a></p>
+<p><strong>3、运行项目</strong><br>terminal进入到项目更目录，执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure>
+<p>执行脚本，把we文件编译成js文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./weextwo</div></pre></td></tr></table></figure>
+<p>继续执行脚本，将上一步生成的js文件复制到android的项目中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./weextwo android</div></pre></td></tr></table></figure>
+<p>用AndroidStudio或者eclipse打开playground项目，好啦，这样你就可以看到效果啦！</p>
+<h2 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h2><p>下面这些问题就是我在做weextwo的时候遇到的问题。</p>
+<p><strong>1、运行调试</strong></p>
+<p>我这里使用的方法其实就是讲生成的js文件放到android中运行的，当然weex是支持类似RN那样，pc作为服务器将生成的bundle分发到真机上，只要修改代码，真机就可以立即看到结果。<br>不过weex文档有点乱，所以相关东西还没开始写，大家可以去探究探究。</p>
+<p><strong>2、网络请求</strong></p>
+<p>网络请求返回的数据格式问题，这个主要是要会weex debug，对js加断点，调试，还要主要method和created、ready是两个范围的函数（切忌不要把created方法写到method中），method是你自己要定义的方法，created和ready是weex自带的声明周期方法。<br>因为weex还没有很好的开发工具，所以我暂时用的webstorm，但是webstorm无法自动化we的格式，所以我当时在写第一个界面的时候就卡住了，一直没有进行我created中的方法，后面才发现，原来自己把created写到method中去了，大家一定要注意了。</p>
+<p><strong>3、list的坑</strong></p>
+<p>list的每个item点击传入一个id的时候，通过var itemid = e.target.attr.newsid来获取组件中newsid参数值，这种方式遇到一个非常非常奇葩的坑。就是如果这个组件是你自己定义的话，没法获取到，必须是要原生的组件才能获取的到，具体原因还未查明。</p>
+<p><strong>4、文档错误</strong></p>
+<p>1）webview和imageview的时候，src前面还有一个:，怪不得我开始一直检查不到问题，还有目前webview好像还不支持显示html的功能。</p>
+<p>2）textarea和input中需要监控change和input的时候，input的写法是<br>oninput=“onTextAreaChange”，并不是文档中那种写法，试过，不行。</p>
+<p><strong>5、this的作用范围</strong></p>
+<p>this的范围不包括回调函数，所以如果要在回调函数中改变data中的数据，我们需要在函数中声明一个局部变量，使self=this，这个self的作用范围就在回调函数中。</p>
+<p><strong>6、storage问题</strong><br>因为你存储或者获取的时候都是在回调函数中获取的，这是一个异步的过程，所以你不能在执行完一个函数之后，直接在下面的过程中，使用回调得到的结果，这个时候回调的结果可能还没拿到，所以下面的过程都要放到回调函数中去。这个地方坑了我老半天。</p>
+<h2 id="需要解决的问题"><a href="#需要解决的问题" class="headerlink" title="需要解决的问题"></a>需要解决的问题</h2><ul>
+<li>日记保存后并没有立马生效，需要点击退出之后重新进app才能生效，因为weex的生命周期没有像android onresume生命周期，所以我暂时还没修改。</li>
+<li>长按删除，也是没有立马生效，同上原因。</li>
+<li>界面没有适配（weex没有dp单位），不同分辨率 界面看起来也不同。</li>
+</ul>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>好了，最后我们看一下，我们app的运行效果吧！</p>
+<p><img src="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="新闻列表"></p>
+<p><img src="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="新闻详情"></p>
+<p><img src="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记列表"></p>
+<p><img src="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记详情"></p>
+<p>还有上拉和下拉刷新，我没有截图下来，大家可以去试试。</p>
 
       
     </div>
@@ -387,9 +423,9 @@ setPreviewSize和setPic">
           
             <a href="/tags/android/" rel="tag">#android</a>
           
-            <a href="/tags/camera/" rel="tag">#camera</a>
+            <a href="/tags/weex/" rel="tag">#weex</a>
           
-            <a href="/tags/native/" rel="tag">#native</a>
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
           
         </div>
       
@@ -398,16 +434,16 @@ setPreviewSize和setPic">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/26/微信小程序学习资料汇总/" rel="next" title="微信小程序学习资料汇总">
-                <i class="fa fa-chevron-left"></i> 微信小程序学习资料汇总
+              <a href="/2016/06/27/Volley源码解析(一)/" rel="next" title="Volley源码解析(一)">
+                <i class="fa fa-chevron-left"></i> Volley源码解析(一)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/02/基于ReactNative和Realm的开源项目/" rel="prev" title="基于ReactNative和Realm的开源项目">
-                基于ReactNative和Realm的开源项目 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/07/02/Volley源码解析(二)/" rel="prev" title="Volley源码解析(二)">
+                Volley源码解析(二) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -457,8 +493,8 @@ setPreviewSize和setPic">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/01/自定义相机踩过的坑/"
-           data-title="自定义相机踩过的坑" data-url="http://loner.pub/2016/12/01/自定义相机踩过的坑/">
+      <div class="ds-thread" data-thread-key="2016/06/27/初学weex/"
+           data-title="Weex初学之旅" data-url="http://loner.pub/2016/06/27/初学weex/">
       </div>
     
   </div>
@@ -587,7 +623,7 @@ setPreviewSize和setPic">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用的问题"><span class="nav-number">1.</span> <span class="nav-text">通用的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个别手机问题"><span class="nav-number">2.</span> <span class="nav-text">个别手机问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的坑"><span class="nav-number">3.</span> <span class="nav-text">遇到的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要解决的问题"><span class="nav-number">4.</span> <span class="nav-text">需要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果"><span class="nav-number">5.</span> <span class="nav-text">效果</span></a></li></ol></div>
             
           </div>
         </section>
