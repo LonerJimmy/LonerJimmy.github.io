@@ -90,15 +90,15 @@
 <meta property="og:url" content="http://loner.pub/2017/01/07/初学weex/index.html">
 <meta property="og:site_name" content="小屎撅">
 <meta property="og:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。一些童鞋在学习、调试weex的时候非常头疼，每次修改完代码之后，要么扫一下二维码，要么手动刷新一下，很耽误时间。这个demo实现了hot reload，即修改代码，保存后，app端可以直接看到效">
-<meta property="og:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-13T07:12:44.000Z">
+<meta property="og:updated_time" content="2017-02-13T07:23:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Weex学习之旅（一）—— hot reload">
 <meta name="twitter:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。一些童鞋在学习、调试weex的时候非常头疼，每次修改完代码之后，要么扫一下二维码，要么手动刷新一下，很耽误时间。这个demo实现了hot reload，即修改代码，保存后，app端可以直接看到效">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -381,11 +381,14 @@
 <li>界面没有适配（weex没有dp单位），不同分辨率 界面看起来也不同。</li>
 </ul>
 <h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>好了，最后我们看一下，我们app的运行效果吧！</p>
-<p><img src="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="新闻列表"></p>
-<p><img src="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="新闻详情"></p>
-<p><img src="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记列表"></p>
-<p><img src="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记详情"></p>
-<p>还有上拉和下拉刷新，我没有截图下来，大家可以去试试。</p>
+<p>新闻列表</p>
+<p><img src="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width="200px" height="400px"></p>
+<p>新闻详情</p>
+<p><img src="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width="200px" height="400px"></p>
+<p>日记列表</p>
+<p><img src="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width="200px" height="400px"></p>
+<p>写日记</p>
+<p><img src="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" width="200px" height="400px"><br>还有上拉和下拉刷新，我没有截图下来，大家可以去试试。</p>
 <p><a href="https://github.com/LonerJimmy/WeexTwo" target="_blank" rel="external"><strong>项目源码</strong></a></p>
 
       
