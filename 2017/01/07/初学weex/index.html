@@ -84,38 +84,20 @@
 
 
 
-<meta name="description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
-使用方法1、项目地址
-2、配置环境
-这个大家可以从weex官网去看。weex官网
-3、运行项目terminal进入到项目更目录，执行命令：
-1npm install
-执行脚本，把we文件编译成">
+<meta name="description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。一些童鞋在学习、调试weex的时候非常头疼，每次修改完代码之后，要么扫一下二维码，要么手动刷新一下，很耽误时间。这个demo实现了hot reload，即修改代码，保存后，app端可以直接看到效">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Weex初学之旅">
+<meta property="og:title" content="Weex学习之旅（一）—— hot reload">
 <meta property="og:url" content="http://loner.pub/2017/01/07/初学weex/index.html">
 <meta property="og:site_name" content="小屎撅">
-<meta property="og:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
-使用方法1、项目地址
-2、配置环境
-这个大家可以从weex官网去看。weex官网
-3、运行项目terminal进入到项目更目录，执行命令：
-1npm install
-执行脚本，把we文件编译成">
+<meta property="og:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。一些童鞋在学习、调试weex的时候非常头疼，每次修改完代码之后，要么扫一下二维码，要么手动刷新一下，很耽误时间。这个demo实现了hot reload，即修改代码，保存后，app端可以直接看到效">
 <meta property="og:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170206214738150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-07T09:23:11.000Z">
+<meta property="og:updated_time" content="2017-02-13T07:12:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Weex初学之旅">
-<meta name="twitter:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。
-使用方法1、项目地址
-2、配置环境
-这个大家可以从weex官网去看。weex官网
-3、运行项目terminal进入到项目更目录，执行命令：
-1npm install
-执行脚本，把we文件编译成">
+<meta name="twitter:title" content="Weex学习之旅（一）—— hot reload">
+<meta name="twitter:description" content="简介阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。一些童鞋在学习、调试weex的时候非常头疼，每次修改完代码之后，要么扫一下二维码，要么手动刷新一下，很耽误时间。这个demo实现了hot reload，即修改代码，保存后，app端可以直接看到效">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20170206214702556?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -139,7 +121,7 @@
 
   <link rel="canonical" href="http://loner.pub/2017/01/07/初学weex/"/>
 
-  <title> Weex初学之旅 | 小屎撅 </title>
+  <title> Weex学习之旅（一）—— hot reload | 小屎撅 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -289,7 +271,7 @@
             
             
               
-                Weex初学之旅
+                Weex学习之旅（一）—— hot reload
               
             
           </h1>
@@ -342,7 +324,7 @@
 
           
           
-             <span id="/2017/01/07/初学weex/" class="leancloud_visitors" data-flag-title="Weex初学之旅">
+             <span id="/2017/01/07/初学weex/" class="leancloud_visitors" data-flag-title="Weex学习之旅（一）—— hot reload">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -364,17 +346,22 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>阿里新出的weex，我一个做android的也过来凑个热闹，自己做了一个简单的demo，是一个知乎新闻+日记的APP，功能比较简单，代码也是最基本的写法和用法，初学weex的童鞋们可以参考使用学习一下。<br>一些童鞋在学习、调试weex的时候非常头疼，每次修改完代码之后，要么扫一下二维码，要么手动刷新一下，很耽误时间。这个demo实现了hot reload，即修改代码，保存后，app端可以直接看到效果。<br>大概原理，需要启动hot reload端口，即weex xxx.we命令，这个服务启动以后，java添加websocket监听命令，就可以监听到we文件的改变。文件改变的时候，重新render你已经开启的12580端口服务，就是你js打包上传到的服务，这样，就可以实现实时刷新的功能。</p>
 <h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p><strong>1、</strong><a href="https://github.com/LonerJimmy/WeexTwo" target="_blank" rel="external"><strong>项目地址</strong></a></p>
 <p><strong>2、配置环境</strong></p>
 <p>这个大家可以从weex官网去看。<a href="https://weex-project.io/cn/guide/index.html" target="_blank" rel="external">weex官网</a></p>
-<p><strong>3、运行项目</strong><br>terminal进入到项目更目录，执行命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure>
-<p>执行脚本，把we文件编译成js文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./weextwo</div></pre></td></tr></table></figure>
-<p>继续执行脚本，将上一步生成的js文件复制到android的项目中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./weextwo android</div></pre></td></tr></table></figure>
-<p>用AndroidStudio或者eclipse打开playground项目，好啦，这样你就可以看到效果啦！</p>
+<p><strong>3、运行项目</strong><br>首先需要：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure></p>
+<p>装好node_modules之后，第一次命令如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run build</div></pre></td></tr></table></figure></p>
+<p>然后用studio打开playground代码，把MainActivity.java中的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> String <span class="title">getHost</span><span class="params">()</span> </span>&#123;</div><div class="line"><span class="keyword">return</span> <span class="string">"10.12.65.114"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>中的return的string修改成你pc的ip就可以了。</p>
+<p>把MainActivity.java中的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> String <span class="title">setHotRefreshUrl</span><span class="params">()</span> </span>&#123;</div><div class="line"><span class="keyword">return</span> <span class="string">"main"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>中return的string修改成你要调试的we文件的名字就可以了。</p>
+<p>启动watch服务以及debug服务命令如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run dev</div></pre></td></tr></table></figure></p>
+<p>最新增加hot reload功能，修改完代码后，可以在android上直接看到效果。<br>打开命令行，进入目录src下，执行（weex后面增加的是你要调试的文件名，如果你修改了文件名，只要把下面对应的文件名修改一下就可以了）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">weex main.js</div></pre></td></tr></table></figure></p>
+<ul>
+<li>使用android studio打开playground，运行app，修改代码，就可以直接看到效果了。</li>
+<li>如果更改代码没有效果，点一下app右上角的刷新按钮，也可以立即看到效果。</li>
+</ul>
 <h2 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h2><p>下面这些问题就是我在做weextwo的时候遇到的问题。</p>
 <p><strong>1、运行调试</strong></p>
 <p>我这里使用的方法其实就是讲生成的js文件放到android中运行的，当然weex是支持类似RN那样，pc作为服务器将生成的bundle分发到真机上，只要修改代码，真机就可以立即看到结果。<br>不过weex文档有点乱，所以相关东西还没开始写，大家可以去探究探究。</p>
@@ -399,6 +386,7 @@
 <p><img src="http://img.blog.csdn.net/20170206214802174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记列表"></p>
 <p><img src="http://img.blog.csdn.net/20170206214852994?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemptMDUxOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="日记详情"></p>
 <p>还有上拉和下拉刷新，我没有截图下来，大家可以去试试。</p>
+<p><a href="https://github.com/LonerJimmy/WeexTwo" target="_blank" rel="external"><strong>项目源码</strong></a></p>
 
       
     </div>
@@ -490,7 +478,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/01/07/初学weex/"
-           data-title="Weex初学之旅" data-url="http://loner.pub/2017/01/07/初学weex/">
+           data-title="Weex学习之旅（一）—— hot reload" data-url="http://loner.pub/2017/01/07/初学weex/">
       </div>
     
   </div>
