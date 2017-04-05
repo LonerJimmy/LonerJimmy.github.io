@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android,camera,native," />
+  <meta name="keywords" content="反射,框架,模块化,apt," />
 
 
 
@@ -84,22 +84,31 @@
 
 
 
-<meta name="description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
+<meta name="description" content="spiny方案 vs 接口方案我们先看看这个spiny框架的思想和使用，先看下图：
+
+模块化分组的时候，它其实是在我们之前那种分组的基础上，加上一个module，Router，这里就是注册模块，所有需要公共出来的方法、参数、函数等信息都需要注册到这个模块中，使用方需要在这个module中找到注册信息，然后再去找到相对应的实现中去。然后看一下另外的我们之前的方案的图
+
+这个spiny方案，所有mod">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自定义相机踩过的坑">
-<meta property="og:url" content="http://loner.pub/2016/12/01/自定义相机踩过的坑/index.html">
+<meta property="og:title" content="模块化探索(二)——实现">
+<meta property="og:url" content="http://loner.pub/2017/07/05/模块化探索(二)/index.html">
 <meta property="og:site_name" content="小屎撅">
-<meta property="og:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201202958454">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201203612362">
-<meta property="og:updated_time" content="2016-12-15T04:10:45.000Z">
+<meta property="og:description" content="spiny方案 vs 接口方案我们先看看这个spiny框架的思想和使用，先看下图：
+
+模块化分组的时候，它其实是在我们之前那种分组的基础上，加上一个module，Router，这里就是注册模块，所有需要公共出来的方法、参数、函数等信息都需要注册到这个模块中，使用方需要在这个module中找到注册信息，然后再去找到相对应的实现中去。然后看一下另外的我们之前的方案的图
+
+这个spiny方案，所有mod">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5477705-b54a0c9ec4d1ea65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5477705-df94071b8c81c747.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-05T05:30:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自定义相机踩过的坑">
-<meta name="twitter:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20161201202958454">
+<meta name="twitter:title" content="模块化探索(二)——实现">
+<meta name="twitter:description" content="spiny方案 vs 接口方案我们先看看这个spiny框架的思想和使用，先看下图：
+
+模块化分组的时候，它其实是在我们之前那种分组的基础上，加上一个module，Router，这里就是注册模块，所有需要公共出来的方法、参数、函数等信息都需要注册到这个模块中，使用方需要在这个module中找到注册信息，然后再去找到相对应的实现中去。然后看一下另外的我们之前的方案的图
+
+这个spiny方案，所有mod">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5477705-b54a0c9ec4d1ea65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -120,9 +129,9 @@ setPreviewSize和setPic">
 
 
 
-  <link rel="canonical" href="http://loner.pub/2016/12/01/自定义相机踩过的坑/"/>
+  <link rel="canonical" href="http://loner.pub/2017/07/05/模块化探索(二)/"/>
 
-  <title> 自定义相机踩过的坑 | 小屎撅 </title>
+  <title> 模块化探索(二)——实现 | 小屎撅 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +281,7 @@ setPreviewSize和setPic">
             
             
               
-                自定义相机踩过的坑
+                模块化探索(二)——实现
               
             
           </h1>
@@ -284,8 +293,8 @@ setPreviewSize和setPic">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-01T16:36:18+08:00" content="2016-12-01">
-              2016-12-01
+            <time itemprop="dateCreated" datetime="2017-07-05T19:30:18+08:00" content="2017-07-05">
+              2017-07-05
             </time>
           </span>
 
@@ -314,8 +323,8 @@ setPreviewSize和setPic">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/12/01/自定义相机踩过的坑/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/01/自定义相机踩过的坑/" itemprop="commentsCount"></span>
+                <a href="/2017/07/05/模块化探索(二)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/05/模块化探索(二)/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -325,7 +334,7 @@ setPreviewSize和setPic">
 
           
           
-             <span id="/2016/12/01/自定义相机踩过的坑/" class="leancloud_visitors" data-flag-title="自定义相机踩过的坑">
+             <span id="/2017/07/05/模块化探索(二)/" class="leancloud_visitors" data-flag-title="模块化探索(二)——实现">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -347,22 +356,29 @@ setPreviewSize和setPic">
       
 
       
-        <h2 id="通用的问题"><a href="#通用的问题" class="headerlink" title="通用的问题"></a>通用的问题</h2><p>因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。</p>
-<p><strong>setPreviewSize和setPictureSize</strong><br>之前做法，paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes，获取一个list<size>，从里面找出最大的width<em>height，然后设置setPreviewSize和setPictureSize，这种情况，对于surfaceview是全屏的情况下，是没发现什么问题的。但是如果surfaceview不是全屏的情况下呢？<br>这种情况，找到一种最合适的解决方案，算出surfaceview的width/height，然后遍历整个paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes的width/height，找出最接近的比例，这就是最核心的算法。<br>好了，算法找出来之后，我们就要开始进一步优化了。<br><strong>遇到过的坑：</strong><br>1）好了，算法写好了，我们就开始测试了，发现相机预览的时候，图像还是有拉伸，这是为什么咧？<br>为了解决这个问题，我把所有的支持的preview的图片全都打印出来，发现其中有很多size，width &gt; height，而我们的surfaceview是width &lt; height，这是一个坑，所以我们在进行核心算法之前，我们要遍历list，目的是要先将获取的previewsize的list中的size中的width和height全部变成width &gt; height，然后返回一个我们需要在后面算法遍历的list。同理，picturesize也是要同样处理。<br>2）使用上面新的算法的时候，发现预览的时候，发现特别模糊。<br>这个原因，一下就可以猜测到，我们选取preview size的时候，虽然找到最接近sufaceview的width/height，但是这个像素点太低了。所以我又将support preview size以及width/height又给打了一遍，发现其实有两个size是比例相近的，其中一个size像素比较高，但是为啥选了低的那个咧？<br>很明显，这个support list是乱序的，选到一个最合适的，就是它了。所以，开始还需要将这个list排序一波，从大到小，这样的话，就算list中有好几个比例最接近sufaceview的，我们也是找到最大像素的size。同时呢，为了防止图片像素太低，我又加了一个判断，少于480 </em> 320（实验得到的），就可以直接break出来了，这样也能保证比较高的像素点，还能减少时间复杂度。<br>3）遗留问题，三星<br>三星拍出来的照片是反的，开始以为是width&gt;heigth的原因，验证得到，setRoutation失败。<br>开始以为是preview和picture的width&gt;height，然后就在想改变surfaceview或者其他方法，后来发现，其他手机width&gt;height，最终才知道，原来是三星手机setRoutation没作用。<br>至今没有解决。</size></p>
-<h2 id="个别手机问题"><a href="#个别手机问题" class="headerlink" title="个别手机问题"></a>个别手机问题</h2><p><strong>设置自动对焦</strong></p>
-<p>好了，设置好preview和picture的size之后，图像就不会出现变形或者其他状况了，但是我们发现这样的话，看起来模糊，这是为啥咧？原来我们没有设置自动对焦，好，那我们就设置自动对焦，这样又趴出阿里一些坑，而且都是个别手机的问题。<br>我们都知道设置自动对焦代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div></pre></td></tr></table></figure>
-<p>好了，然后我们就用手机测试一波。</p>
-<p><strong>三星手机</strong></p>
-<p>出现了这个问题：<br><img src="http://img.blog.csdn.net/20161201202958454" alt="这里写图片描述"></p>
-<p>三星手机，在执行，autofus方法的时候崩溃了（这里涉及到native中的代码，太难了，所以没有去看源码）。当时猜测可能是相机还没完全初始化好，就开始自动对焦，就会崩溃，所以这个方法延时两秒执行，然后就可以了。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">handler.postDelayed(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                try &#123;</div><div class="line">                    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">                &#125; catch (RuntimeException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;, 2000);</div></pre></td></tr></table></figure>
-<p>这是我一开始的解决方法，后来又查找了一些资料，发现官方介绍文档的时候，说要将autoFocus放到startPreview之后，takePicture之前，结果自己试了一波，果然是这个原因。所以这样的话，我们就不要延时了，放到startPreview之后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mCamera.startPreview();</div><div class="line"></div><div class="line">try &#123;</div><div class="line">    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">        @Override</div><div class="line">        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125; catch (RuntimeException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>猜测原因：</strong><br>部分手机camera初始化耗时长，还没初始好，就设置自动对焦可能就出现问题了。自动对焦延时对焦，对相机来说没有什么影响，所以这种方法可以适用于其他手机类型。</p>
-<p><strong>小米手机</strong><br>红米米手机设置parameters.setFocusMode自动对焦，会直接蹦掉。log如下：<br><img src="http://img.blog.csdn.net/20161201203612362" alt="这里写图片描述"></p>
-<p>这个log根本看不出问题出在哪里，不过幸好的时候，我直接没有设置过自动对焦，而且小米手机没有发生过崩溃，所以就大胆猜测这个问题出在设置自动对焦的时候，最终定位到setFocusMode方法中。<br>做了如下处理：（红米手机所支持的FoucusMode的类型中，没有auto类型，所以setParameters的时候会出错）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; focusModes = parameters.getSupportedFocusModes();</div><div class="line">for (String mode : focusModes) &#123;</div><div class="line">            if (mode.equals(Camera.Parameters.FOCUS_MODE_AUTO)) &#123;</div><div class="line">                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+        <h1 id="spiny方案-vs-接口方案"><a href="#spiny方案-vs-接口方案" class="headerlink" title="spiny方案 vs 接口方案"></a>spiny方案 vs 接口方案</h1><p>我们先看看这个spiny框架的思想和使用，先看下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5477705-b54a0c9ec4d1ea65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spiny.png"></p>
+<p>模块化分组的时候，它其实是在我们之前那种分组的基础上，加上一个module，Router，这里就是注册模块，所有需要公共出来的方法、参数、函数等信息都需要注册到这个模块中，使用方需要在这个module中找到注册信息，然后再去找到相对应的实现中去。<br>然后看一下另外的我们之前的方案的图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5477705-df94071b8c81c747.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="早期架构-2.png"></p>
+<p>这个spiny方案，所有module依赖的只有router，module之间的互相依赖都没有了。<br>到此为止，我们来比较一下这两个方案吧！<br>大家看之前方案的优缺点：</p>
+<ol>
+<li>依赖接口，弱解耦</li>
+<li>没有动态性</li>
+<li>接口依赖，编译器检查</li>
+<li>原生接口，学习开发障碍小</li>
+</ol>
+<p>前面也说过了，spiny方案要比接口方案耦合度更低。接口方案缺少动态性，而spinny这里面，只要我们注册的provider和action名字不变，里面如何改动，我们都可以不用管，这样是不是有点url方案的感觉。<br>但是呢？大家可以看一下<a href="http://blog.spinytech.com/2017/02/01/ma_get_start_cn/" title="spiny使用" target="_blank" rel="external">spiny使用</a>，我了个大擦，是不是炒鸡无敌麻烦？而且虽然代码都是原生，大家学起来不麻烦，但是如果项目子module多，互相之间都要调用，这岂不是一个很巨大的工程？<br>这样看起来，spiny和接口方案可以说是五五开吧！</p>
+<h1 id="新鲜出炉的Loner-Modularization"><a href="#新鲜出炉的Loner-Modularization" class="headerlink" title="新鲜出炉的Loner Modularization"></a>新鲜出炉的Loner Modularization</h1><p>因为刚自己写了一个简单的框架，名字还没想好，就暂时用我的名字来命名吧！我这个方案思路其实就是在spinny基础上，简化它的注册和使用流程。那怎么简化呢？</p>
+<p>大家都知道apt吧，那其实那么多繁琐的注册过程，我们可不可以使用apt来动态生成呢？当然可以！</p>
+<p>那大家会问，如果调用的话，怎么办？</p>
+<p>注册时候，我们把包名、类名，都保存起来，使用的时候，我们用反射的方法不就可以使用了吗？</p>
+<p>这样的话，我们比接口方案的优势就明显了，唯一的一个缺点就是</p>
+<ul>
+<li>接口依赖，编译器检查</li>
+</ul>
+<p>这个问题，如果提供方改掉方法的话，使用放在编译期间是检测不到的。解决方法也是有的，就像我们项目中的接口module，里面的接口中的方法只能递增添加，不能改变。那我们也在Loner中定义，所有提供方的方法，只能递增增加，不能改变。</p>
+<p>git地址：<br><a href="https://github.com/LonerJimmy/Modularization" title="LonerModularization" target="_blank" rel="external">LonerModularization</a></p>
+<p>代码还没完善，也没传到jcenter上，后面会慢慢完善。</p>
 
       
     </div>
@@ -385,11 +401,13 @@ setPreviewSize和setPic">
       
         <div class="post-tags">
           
-            <a href="/tags/android/" rel="tag">#android</a>
+            <a href="/tags/反射/" rel="tag">#反射</a>
           
-            <a href="/tags/camera/" rel="tag">#camera</a>
+            <a href="/tags/框架/" rel="tag">#框架</a>
           
-            <a href="/tags/native/" rel="tag">#native</a>
+            <a href="/tags/模块化/" rel="tag">#模块化</a>
+          
+            <a href="/tags/apt/" rel="tag">#apt</a>
           
         </div>
       
@@ -398,17 +416,13 @@ setPreviewSize和setPic">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/26/微信小程序学习资料汇总/" rel="next" title="微信小程序学习资料汇总">
-                <i class="fa fa-chevron-left"></i> 微信小程序学习资料汇总
+              <a href="/2017/07/05/模块化探索(一)/" rel="next" title="模块化探索(一)——背景">
+                <i class="fa fa-chevron-left"></i> 模块化探索(一)——背景
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/02/基于ReactNative和Realm的开源项目/" rel="prev" title="基于ReactNative和Realm的开源项目">
-                基于ReactNative和Realm的开源项目 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -457,8 +471,8 @@ setPreviewSize和setPic">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/01/自定义相机踩过的坑/"
-           data-title="自定义相机踩过的坑" data-url="http://loner.pub/2016/12/01/自定义相机踩过的坑/">
+      <div class="ds-thread" data-thread-key="2017/07/05/模块化探索(二)/"
+           data-title="模块化探索(二)——实现" data-url="http://loner.pub/2017/07/05/模块化探索(二)/">
       </div>
     
   </div>
@@ -587,7 +601,7 @@ setPreviewSize和setPic">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用的问题"><span class="nav-number">1.</span> <span class="nav-text">通用的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个别手机问题"><span class="nav-number">2.</span> <span class="nav-text">个别手机问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spiny方案-vs-接口方案"><span class="nav-number">1.</span> <span class="nav-text">spiny方案 vs 接口方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新鲜出炉的Loner-Modularization"><span class="nav-number">2.</span> <span class="nav-text">新鲜出炉的Loner Modularization</span></a></li></ol></div>
             
           </div>
         </section>

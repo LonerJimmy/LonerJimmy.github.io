@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android,camera,native," />
+  <meta name="keywords" content="模块化," />
 
 
 
@@ -84,22 +84,21 @@
 
 
 
-<meta name="description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
+<meta name="description" content="模块化是什么官方解释，模块化是指解决一个复杂问题时自顶向下逐层把系统划分成若干模块的过程，有多种属性，分别反映其内部特性。简单来说，就是把独立的模块分割开来开发，最后用集成的方式组合起来，拼出一个app，就比如我们蜂鸟团队app，把UI控件、网络请求等通用的功能模块以及qc、feedback等业务模块抽出来，把独立的模块抽出来，这样做还有一个好处，其他app也可以使用相同的模块。
+模块化好处1、每">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自定义相机踩过的坑">
-<meta property="og:url" content="http://loner.pub/2016/12/01/自定义相机踩过的坑/index.html">
+<meta property="og:title" content="模块化探索(一)——背景">
+<meta property="og:url" content="http://loner.pub/2017/07/05/模块化探索(一)/index.html">
 <meta property="og:site_name" content="小屎撅">
-<meta property="og:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201202958454">
-<meta property="og:image" content="http://img.blog.csdn.net/20161201203612362">
-<meta property="og:updated_time" content="2016-12-15T04:10:45.000Z">
+<meta property="og:description" content="模块化是什么官方解释，模块化是指解决一个复杂问题时自顶向下逐层把系统划分成若干模块的过程，有多种属性，分别反映其内部特性。简单来说，就是把独立的模块分割开来开发，最后用集成的方式组合起来，拼出一个app，就比如我们蜂鸟团队app，把UI控件、网络请求等通用的功能模块以及qc、feedback等业务模块抽出来，把独立的模块抽出来，这样做还有一个好处，其他app也可以使用相同的模块。
+模块化好处1、每">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5477705-87b2b41ce46b587d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-05T05:31:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自定义相机踩过的坑">
-<meta name="twitter:description" content="通用的问题因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。
-setPreviewSize和setPic">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20161201202958454">
+<meta name="twitter:title" content="模块化探索(一)——背景">
+<meta name="twitter:description" content="模块化是什么官方解释，模块化是指解决一个复杂问题时自顶向下逐层把系统划分成若干模块的过程，有多种属性，分别反映其内部特性。简单来说，就是把独立的模块分割开来开发，最后用集成的方式组合起来，拼出一个app，就比如我们蜂鸟团队app，把UI控件、网络请求等通用的功能模块以及qc、feedback等业务模块抽出来，把独立的模块抽出来，这样做还有一个好处，其他app也可以使用相同的模块。
+模块化好处1、每">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5477705-87b2b41ce46b587d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -120,9 +119,9 @@ setPreviewSize和setPic">
 
 
 
-  <link rel="canonical" href="http://loner.pub/2016/12/01/自定义相机踩过的坑/"/>
+  <link rel="canonical" href="http://loner.pub/2017/07/05/模块化探索(一)/"/>
 
-  <title> 自定义相机踩过的坑 | 小屎撅 </title>
+  <title> 模块化探索(一)——背景 | 小屎撅 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +271,7 @@ setPreviewSize和setPic">
             
             
               
-                自定义相机踩过的坑
+                模块化探索(一)——背景
               
             
           </h1>
@@ -284,8 +283,8 @@ setPreviewSize和setPic">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-01T16:36:18+08:00" content="2016-12-01">
-              2016-12-01
+            <time itemprop="dateCreated" datetime="2017-07-05T19:30:18+08:00" content="2017-07-05">
+              2017-07-05
             </time>
           </span>
 
@@ -314,8 +313,8 @@ setPreviewSize和setPic">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/12/01/自定义相机踩过的坑/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/01/自定义相机踩过的坑/" itemprop="commentsCount"></span>
+                <a href="/2017/07/05/模块化探索(一)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/05/模块化探索(一)/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -325,7 +324,7 @@ setPreviewSize和setPic">
 
           
           
-             <span id="/2016/12/01/自定义相机踩过的坑/" class="leancloud_visitors" data-flag-title="自定义相机踩过的坑">
+             <span id="/2017/07/05/模块化探索(一)/" class="leancloud_visitors" data-flag-title="模块化探索(一)——背景">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -347,22 +346,45 @@ setPreviewSize和setPic">
       
 
       
-        <h2 id="通用的问题"><a href="#通用的问题" class="headerlink" title="通用的问题"></a>通用的问题</h2><p>因为我要做的是一个高度定制（只有前置摄像头并且整个项目activity都是禁止翻转的）的相机，相机的surfaceview的宽度和高度都不是屏幕的高度和宽度，所以相机的preview（预览）和picture（拍照）都会有问题，有时候发现preview中的图像变形，或者拍出来的照片及其模糊，还有一些其他问题。今天把做这个项目中遇到的坑都给趴出来。</p>
-<p><strong>setPreviewSize和setPictureSize</strong><br>之前做法，paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes，获取一个list<size>，从里面找出最大的width<em>height，然后设置setPreviewSize和setPictureSize，这种情况，对于surfaceview是全屏的情况下，是没发现什么问题的。但是如果surfaceview不是全屏的情况下呢？<br>这种情况，找到一种最合适的解决方案，算出surfaceview的width/height，然后遍历整个paramerters.getSupportedPreviewSizes和parameters.getSupportedPictureSizes的width/height，找出最接近的比例，这就是最核心的算法。<br>好了，算法找出来之后，我们就要开始进一步优化了。<br><strong>遇到过的坑：</strong><br>1）好了，算法写好了，我们就开始测试了，发现相机预览的时候，图像还是有拉伸，这是为什么咧？<br>为了解决这个问题，我把所有的支持的preview的图片全都打印出来，发现其中有很多size，width &gt; height，而我们的surfaceview是width &lt; height，这是一个坑，所以我们在进行核心算法之前，我们要遍历list，目的是要先将获取的previewsize的list中的size中的width和height全部变成width &gt; height，然后返回一个我们需要在后面算法遍历的list。同理，picturesize也是要同样处理。<br>2）使用上面新的算法的时候，发现预览的时候，发现特别模糊。<br>这个原因，一下就可以猜测到，我们选取preview size的时候，虽然找到最接近sufaceview的width/height，但是这个像素点太低了。所以我又将support preview size以及width/height又给打了一遍，发现其实有两个size是比例相近的，其中一个size像素比较高，但是为啥选了低的那个咧？<br>很明显，这个support list是乱序的，选到一个最合适的，就是它了。所以，开始还需要将这个list排序一波，从大到小，这样的话，就算list中有好几个比例最接近sufaceview的，我们也是找到最大像素的size。同时呢，为了防止图片像素太低，我又加了一个判断，少于480 </em> 320（实验得到的），就可以直接break出来了，这样也能保证比较高的像素点，还能减少时间复杂度。<br>3）遗留问题，三星<br>三星拍出来的照片是反的，开始以为是width&gt;heigth的原因，验证得到，setRoutation失败。<br>开始以为是preview和picture的width&gt;height，然后就在想改变surfaceview或者其他方法，后来发现，其他手机width&gt;height，最终才知道，原来是三星手机setRoutation没作用。<br>至今没有解决。</size></p>
-<h2 id="个别手机问题"><a href="#个别手机问题" class="headerlink" title="个别手机问题"></a>个别手机问题</h2><p><strong>设置自动对焦</strong></p>
-<p>好了，设置好preview和picture的size之后，图像就不会出现变形或者其他状况了，但是我们发现这样的话，看起来模糊，这是为啥咧？原来我们没有设置自动对焦，好，那我们就设置自动对焦，这样又趴出阿里一些坑，而且都是个别手机的问题。<br>我们都知道设置自动对焦代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div></pre></td></tr></table></figure>
-<p>好了，然后我们就用手机测试一波。</p>
-<p><strong>三星手机</strong></p>
-<p>出现了这个问题：<br><img src="http://img.blog.csdn.net/20161201202958454" alt="这里写图片描述"></p>
-<p>三星手机，在执行，autofus方法的时候崩溃了（这里涉及到native中的代码，太难了，所以没有去看源码）。当时猜测可能是相机还没完全初始化好，就开始自动对焦，就会崩溃，所以这个方法延时两秒执行，然后就可以了。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">handler.postDelayed(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                try &#123;</div><div class="line">                    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">                        @Override</div><div class="line">                        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">                &#125; catch (RuntimeException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;, 2000);</div></pre></td></tr></table></figure>
-<p>这是我一开始的解决方法，后来又查找了一些资料，发现官方介绍文档的时候，说要将autoFocus放到startPreview之后，takePicture之前，结果自己试了一波，果然是这个原因。所以这样的话，我们就不要延时了，放到startPreview之后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mCamera.startPreview();</div><div class="line"></div><div class="line">try &#123;</div><div class="line">    mCamera.autoFocus(new Camera.AutoFocusCallback() &#123;</div><div class="line">        @Override</div><div class="line">        public void onAutoFocus(boolean b, Camera camera) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125; catch (RuntimeException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>猜测原因：</strong><br>部分手机camera初始化耗时长，还没初始好，就设置自动对焦可能就出现问题了。自动对焦延时对焦，对相机来说没有什么影响，所以这种方法可以适用于其他手机类型。</p>
-<p><strong>小米手机</strong><br>红米米手机设置parameters.setFocusMode自动对焦，会直接蹦掉。log如下：<br><img src="http://img.blog.csdn.net/20161201203612362" alt="这里写图片描述"></p>
-<p>这个log根本看不出问题出在哪里，不过幸好的时候，我直接没有设置过自动对焦，而且小米手机没有发生过崩溃，所以就大胆猜测这个问题出在设置自动对焦的时候，最终定位到setFocusMode方法中。<br>做了如下处理：（红米手机所支持的FoucusMode的类型中，没有auto类型，所以setParameters的时候会出错）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; focusModes = parameters.getSupportedFocusModes();</div><div class="line">for (String mode : focusModes) &#123;</div><div class="line">            if (mode.equals(Camera.Parameters.FOCUS_MODE_AUTO)) &#123;</div><div class="line">                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+        <h1 id="模块化是什么"><a href="#模块化是什么" class="headerlink" title="模块化是什么"></a>模块化是什么</h1><p>官方解释，模块化是指解决一个复杂问题时自顶向下逐层把系统划分成若干模块的过程，有多种属性，分别反映其内部特性。<br>简单来说，就是把独立的模块分割开来开发，最后用集成的方式组合起来，拼出一个app，就比如我们蜂鸟团队app，把UI控件、网络请求等通用的功能模块以及qc、feedback等业务模块抽出来，把独立的模块抽出来，这样做还有一个好处，其他app也可以使用相同的模块。</p>
+<h1 id="模块化好处"><a href="#模块化好处" class="headerlink" title="模块化好处"></a>模块化好处</h1><p>1、每个module可以单独调试开发，节省编译时间。<br>2、降低耦合，划分职责，保证高效迭代。<br>3、技术和业务维度划分模块，独立开发，独立维护。<br>3、模块之间可以复用，便于新模块的快速搭建与接入。<br>4、降低维护难度，降低团队成员熟悉项目的成本。</p>
+<h1 id="模块化设计"><a href="#模块化设计" class="headerlink" title="模块化设计"></a>模块化设计</h1><p>说完前面那些官方介绍之后，我们就开始对app进行模块化重构吧！<br>说到开始，那我们应该怎么设计、分割app呢？这里就说一种最常见、最被认同的方案吧，先看下面图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5477705-87b2b41ce46b587d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="设计图" title="设计图"></p>
+<p>从图中可以看出，推荐分为三大部分：基础模块、业务模块、app模块。<br><strong>基础模块：</strong><br>所有模块依赖库 ，基础工具类，比如封装的网络请求、图片处理、base文件等，接口库（后面会讲到为什么要抽出一个接口库）等<br><strong>业务模块：</strong><br>一些可以独立的出来的业务，比如登录、更新、推送等等。<br><strong>app模块</strong><br>所有模块最终聚合的地方，这里把各个模块整合一起，组成一个app。</p>
+<h1 id="模块化解耦"><a href="#模块化解耦" class="headerlink" title="模块化解耦"></a>模块化解耦</h1><p>设计好了之后，在开发之前，才是这篇文章最重要的部分，如何解耦？<br>你在实际模块化开发的时候，你会发现，每个独立模块并不是完全分割的，互相之间都会有依赖，各种交叉依赖，导致耦合度很高，在维护的时候造成很大的困扰。<br>目前有很多解耦的方法，最常见应该就是两种方法：</p>
+<ol>
+<li>统一跳转</li>
+</ol>
+<ul>
+<li>完全解耦跳转</li>
+<li>url route方式</li>
+<li>动态性+rewrite</li>
+<li>跳转时参数检查</li>
+<li>支持基础数据类型和复杂数据类型</li>
+</ul>
+<ol>
+<li>面向服务，弱解耦</li>
+</ol>
+<ul>
+<li>依赖interface，弱解耦</li>
+<li>没有动态性</li>
+<li>接口强依赖，编译期检查</li>
+<li>原生接口方式，学习开发障碍小</li>
+</ul>
+<p>目前url解耦的方式，每次跳转或者调用的时候，都需要约定url、参数等，这种方式，在业务较多的项目中维护起来不是特别方便，所以我们决定使用面向服务弱解耦的方式。</p>
+<p>在我们目前的项目中，我们模块化的方案是：</p>
+<ul>
+<li>把项目分割成基础模块（网络、UI控件等）、业务模块、接口模块（我们定义好的接口）。</li>
+<li>每个模块打包成aar，最后打包成一个app。<br>这样做起来，每个模块改动之后，还需要升级模块，然后打包，然后给其他模块使用，这样在开发起来十分麻烦。<br>后来公司一位大神做了一套方案，在开发测试的时候，我们可以将module放到本地进行开发测试，上传git的时候，这些本地的module不能传到git上，在本地的module升级打包aar上传到jcenter，最终打包的app就是把打包好的aar组合生成的。<br>这个方案，当多个模块之间需要互相调用的时候呢？我们借助<a href="https://github.com/google/dagger" title="dagger" target="_blank" rel="external">dagger</a>控件来解耦（具体使用大家可以看一下官方文档）。<br>这套模块化的方案，可以比较好的降低模块之间的耦合，但是使用起来是比较繁琐的，</li>
+<li>约定好接口，并单独放到我们的接口模块中</li>
+<li>接口里面的方法，递增的方式添加，尽量不要修改接口方法。</li>
+<li>牵一发而动全身，接口一旦修改了，依赖于这个接口的module是编译不通过的。</li>
+</ul>
+<p>那还有没有更好的方案呢？</p>
+<p>答案是有的。无意中看到的一篇文章，这种方案给了我很大的启发。<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" title="spiny模块化" target="_blank" rel="external">spiny模块化</a></p>
+<p>spiny框架，本质上就是把我们的接口module改成注册的module，也就是说我们项目中有耦合关系的module，需要将耦合的方法、参数等统一注册到我们的接口module，每次需要调用的时候，从注册module中去找，找到注册信息后去找到相应的实现方法。<br>这样做的好处就是：<br><strong>耦合度更低，所有业务module之间的互相依赖都没有了，取消任意一个module引用、修改依赖的方法或者函数都不会影响整个app的编译。</strong></p>
+<p>听起来是不是很爽，spiny这种模块化方案的确是一个很好的方案，但是大家看它的使用方法就会发现，非常的繁琐、麻烦，每个需要对外提供方法的module都需要继承一大堆的类，使用方也是需要写一大堆东西，那有没有更好的方法来解决这个方法的繁琐呢？</p>
+<p>答案是有的，请看下一篇，</p>
 
       
     </div>
@@ -385,11 +407,7 @@ setPreviewSize和setPic">
       
         <div class="post-tags">
           
-            <a href="/tags/android/" rel="tag">#android</a>
-          
-            <a href="/tags/camera/" rel="tag">#camera</a>
-          
-            <a href="/tags/native/" rel="tag">#native</a>
+            <a href="/tags/模块化/" rel="tag">#模块化</a>
           
         </div>
       
@@ -398,16 +416,16 @@ setPreviewSize和setPic">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/26/微信小程序学习资料汇总/" rel="next" title="微信小程序学习资料汇总">
-                <i class="fa fa-chevron-left"></i> 微信小程序学习资料汇总
+              <a href="/2017/01/07/初学weex/" rel="next" title="Weex学习之旅（一）—— hot reload">
+                <i class="fa fa-chevron-left"></i> Weex学习之旅（一）—— hot reload
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/02/基于ReactNative和Realm的开源项目/" rel="prev" title="基于ReactNative和Realm的开源项目">
-                基于ReactNative和Realm的开源项目 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/模块化探索(二)/" rel="prev" title="模块化探索(二)——实现">
+                模块化探索(二)——实现 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -457,8 +475,8 @@ setPreviewSize和setPic">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/01/自定义相机踩过的坑/"
-           data-title="自定义相机踩过的坑" data-url="http://loner.pub/2016/12/01/自定义相机踩过的坑/">
+      <div class="ds-thread" data-thread-key="2017/07/05/模块化探索(一)/"
+           data-title="模块化探索(一)——背景" data-url="http://loner.pub/2017/07/05/模块化探索(一)/">
       </div>
     
   </div>
@@ -587,7 +605,7 @@ setPreviewSize和setPic">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用的问题"><span class="nav-number">1.</span> <span class="nav-text">通用的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个别手机问题"><span class="nav-number">2.</span> <span class="nav-text">个别手机问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化是什么"><span class="nav-number">1.</span> <span class="nav-text">模块化是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化好处"><span class="nav-number">2.</span> <span class="nav-text">模块化好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化设计"><span class="nav-number">3.</span> <span class="nav-text">模块化设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化解耦"><span class="nav-number">4.</span> <span class="nav-text">模块化解耦</span></a></li></ol></div>
             
           </div>
         </section>
