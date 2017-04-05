@@ -93,7 +93,7 @@
 <meta property="og:description" content="模块化是什么官方解释，模块化是指解决一个复杂问题时自顶向下逐层把系统划分成若干模块的过程，有多种属性，分别反映其内部特性。简单来说，就是把独立的模块分割开来开发，最后用集成的方式组合起来，拼出一个app，就比如我们蜂鸟团队app，把UI控件、网络请求等通用的功能模块以及qc、feedback等业务模块抽出来，把独立的模块抽出来，这样做还有一个好处，其他app也可以使用相同的模块。
 模块化好处1、每">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5477705-87b2b41ce46b587d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-04-05T05:31:42.000Z">
+<meta property="og:updated_time" content="2017-04-05T05:36:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模块化探索(一)——背景">
 <meta name="twitter:description" content="模块化是什么官方解释，模块化是指解决一个复杂问题时自顶向下逐层把系统划分成若干模块的过程，有多种属性，分别反映其内部特性。简单来说，就是把独立的模块分割开来开发，最后用集成的方式组合起来，拼出一个app，就比如我们蜂鸟团队app，把UI控件、网络请求等通用的功能模块以及qc、feedback等业务模块抽出来，把独立的模块抽出来，这样做还有一个好处，其他app也可以使用相同的模块。
@@ -382,7 +382,7 @@
 </ul>
 <p>那还有没有更好的方案呢？</p>
 <p>答案是有的。无意中看到的一篇文章，这种方案给了我很大的启发。<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" title="spiny模块化" target="_blank" rel="external">spiny模块化</a></p>
-<p>spiny框架，本质上就是把我们的接口module改成注册的module，也就是说我们项目中有耦合关系的module，需要将耦合的方法、参数等统一注册到我们的接口module，每次需要调用的时候，从注册module中去找，找到注册信息后去找到相应的实现方法。<br>这样做的好处就是：<br><strong>耦合度更低，所有业务module之间的互相依赖都没有了，取消任意一个module引用、修改依赖的方法或者函数都不会影响整个app的编译。</strong></p>
+<p>spiny框架，本质上就是把我们的接口module改成注册的module，也就是说我们项目中有耦合关系的module，需要将耦合的方法、参数等统一注册到我们的接口module，每次需要调用的时候，从注册module中去找，找到注册信息后去找到相应的实现方法。<br>这样做的好处就是：<br><strong>每个module之间耦合消失，只依赖注册module，极大程度降低耦合度</strong></p>
 <p>听起来是不是很爽，spiny这种模块化方案的确是一个很好的方案，但是大家看它的使用方法就会发现，非常的繁琐、麻烦，每个需要对外提供方法的module都需要继承一大堆的类，使用方也是需要写一大堆东西，那有没有更好的方法来解决这个方法的繁琐呢？</p>
 <p>答案是有的，请看下一篇，</p>
 
